@@ -13,12 +13,7 @@ func main() {
 	godotenv.Load()
 
 	app := gin.Default()
-
-	app.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "healthy",
-		})
-	})
+	app.GET("/health", healthCheck)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -26,4 +21,10 @@ func main() {
 	}
 
 	app.Run(":" + port)
+}
+
+func healthCheck(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"message": "healthy",
+	})
 }
