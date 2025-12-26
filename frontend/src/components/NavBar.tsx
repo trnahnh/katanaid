@@ -6,7 +6,7 @@ import { Card, CardContent } from "./ui/card"
 
 const NavBar = () => {
   return (
-    <nav className="flex items-center justify-between w-full px-3 py-3 border-b-2 pl-10 pr-10">
+    <nav className="flex items-center justify-between w-full px-3 py-3 border-b-2 pl-10">
       <div className="flex items-center gap-2">
         <img src={logo} className="h-8 hover:drop-shadow-[0_0_5px_rgba(59,130,246,0.8)] transition-shadow"></img>
         <p className="font-mono font-bold hover:drop-shadow-[0_0_5px_rgba(59,130,246,0.8)] transition-shadow">Katana ID</p>
@@ -30,7 +30,7 @@ const NavBar = () => {
       </div>
       <div className="flex items-center gap-3">
         <Button variant="ghost" className="">Sign in</Button>
-        <Button variant="default" className="">Verify a media <ArrowRight /></Button>
+        <Button variant="default" className="">Verify a media <ArrowRight className="ml-5"/></Button>
       </div>
     </nav>
   )
