@@ -17,7 +17,7 @@ const NavBar = () => {
             <Button variant="ghost">Developers</Button>
           </HoverCardTrigger>
           <HoverCardContent className="flex gap-2">
-            <Card>
+            <Card className="p-0">
               <CardContent className="p-2">
                 <Button variant="ghost">Khiem Nguyen</Button>
                 <Button variant="ghost">Anh Tran</Button>
