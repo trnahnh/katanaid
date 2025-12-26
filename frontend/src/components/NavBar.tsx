@@ -2,7 +2,6 @@ import { Button } from "./ui/button"
 import { ArrowRight } from 'lucide-react'
 import logo from '/logo.svg'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@radix-ui/react-hover-card"
-import { Card, CardContent } from "./ui/card"
 
 const NavBar = () => {
   return (
@@ -16,13 +15,9 @@ const NavBar = () => {
           <HoverCardTrigger asChild>
             <Button variant="ghost">Developers</Button>
           </HoverCardTrigger>
-          <HoverCardContent className="flex gap-2 mt-2">
-            <Card className="p-0">
-              <CardContent className="p-2">
-                <Button variant="ghost">Khiem Nguyen</Button>
-                <Button variant="ghost">Anh Tran</Button>
-              </CardContent>
-            </Card>
+          <HoverCardContent className="flex gap-2 mt-2 bg-popover p-2 rounded-md border">
+            <Button variant="ghost">Khiem Nguyen</Button>
+            <Button variant="ghost">Anh Tran</Button>
           </HoverCardContent>
         </HoverCard>
         <Button variant="ghost">Demo</Button>
@@ -30,7 +25,7 @@ const NavBar = () => {
       </div>
       <div className="flex items-center gap-3">
         <Button variant="ghost" className="">Sign in</Button>
-        <Button variant="default" className="">Verify a media <ArrowRight className="ml-5"/></Button>
+        <Button variant="default" className="">Verify a media <ArrowRight className="ml-5" /></Button>
       </div>
     </nav>
   )
