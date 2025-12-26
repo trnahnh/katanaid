@@ -1,5 +1,5 @@
 import { Button } from "./ui/button"
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, LucideCodeXml } from 'lucide-react'
 import logo from '/logo.svg'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@radix-ui/react-hover-card"
 
@@ -16,17 +16,20 @@ const NavBar = () => {
             <HoverCardTrigger asChild>
               <Button variant="ghost">Developers</Button>
             </HoverCardTrigger>
-            <HoverCardContent className="flex gap-2 mt-2 bg-popover p-2 rounded-md border">
-              <Button variant="ghost">Khiem Nguyen</Button>
-              <Button variant="ghost">Anh Tran</Button>
+            <HoverCardContent className="gap-2 mt-2 bg-popover p-2 rounded-md border animate-accordion-down">
+              <div className="flex gap-2">
+                <Button variant="secondary">Khiem Nguyen</Button>
+                <Button variant="secondary">Anh Tran</Button>
+              </div>
+                <Button variant="outline" className="mt-2 w-full"><LucideCodeXml />Github</Button>
             </HoverCardContent>
           </HoverCard>
           <Button variant="ghost">Demo</Button>
           <Button variant="ghost">Contact</Button>
         </div>
         <div className="flex flex-1 items-center justify-end gap-3">
-          <Button variant="ghost" className="">Sign in</Button>
-          <Button variant="default" className="">Verify deepfake <ArrowRight /></Button>
+          <Button variant="ghost">Sign in</Button>
+          <Button variant="default">Verify content <ArrowRight /></Button>
         </div>
       </div>
     </nav>
