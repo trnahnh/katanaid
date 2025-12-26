@@ -26,7 +26,7 @@ const NavBar = () => {
         </div>
         <div className="flex flex-1 items-center justify-end gap-3">
           <Button variant="ghost" className="">Sign in</Button>
-          <Button variant="default" className="">Verify a media <ArrowRight className="ml-5" /></Button>
+          <Button variant="default" className="">Verify deepfake <ArrowRight /></Button>
         </div>
       </div>
     </nav>
