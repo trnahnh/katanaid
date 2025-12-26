@@ -7,9 +7,9 @@ import { Card, CardContent } from "./ui/card"
 const NavBar = () => {
   return (
     <nav className="flex items-center justify-between w-full px-3 py-3 border-b-2 pl-10">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <img src={logo} className="h-8 hover:drop-shadow-[0_0_5px_rgba(59,130,246,0.8)] transition-shadow"></img>
-        <p className="font-mono font-bold hover:drop-shadow-[0_0_5px_rgba(59,130,246,0.8)] transition-shadow">Katana ID</p>
+        <p className="text-xl hover:drop-shadow-[0_0_10px_rgba(59,130,246,0.8)] transition-shadow">Katana ID</p>
       </div>
       <div className="flex items-center gap-3">
         <HoverCard openDelay={200} closeDelay={1000}>
