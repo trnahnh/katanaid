@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <Toaster />
+      <Toaster position="top-center"/>
       <Routes>
         <Route path='/' element={<LandingPage/>}/>
         <Route path='/login' element={<LoginPage/>}/>

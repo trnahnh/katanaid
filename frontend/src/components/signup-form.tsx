@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
@@ -12,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import logo from "/logo.svg";
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
+import { toast } from "sonner";
+import { LucideLoader2 } from "lucide-react";
 
 export function SignupForm({
   className,
@@ -23,14 +26,36 @@ export function SignupForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isMatchedPassword, setIsMatchedPassword] = useState(true);
+
+  const isValidInfo = () => {
+    if (username.trim().length < 3) {
+      toast.error("Username must be at least 3 characters");
+      return false;
+    }
+
+    if (password.trim().length < 8) {
+      toast.error("Passwords must be at least 8 characters");
+      return false;
+    }
+
+    setIsMatchedPassword(password === confirmPassword);
+    if (!isMatchedPassword) {
+      return false;
+    }
+
+    return true;
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signup({
-      username: username,
-      email: email,
-      password: password,
-    });
+    if (isValidInfo()) {
+      signup({
+        username: username,
+        email: email,
+        password: password,
+      });
+    }
   };
 
   const navigate = useNavigate();
@@ -88,9 +113,10 @@ export function SignupForm({
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          {isMatchedPassword || <FieldError>Passwords do not match</FieldError>}
         </Field>
         <Field>
-          <Button type="submit">Create Account</Button>
+          <Button type="submit" disabled={isSigningUp}>{isSigningUp ? <LucideLoader2 className="animate-spin"/> : "Create Account"}</Button>
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
         <Field>
