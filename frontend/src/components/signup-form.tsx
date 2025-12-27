@@ -24,7 +24,7 @@ export function SignupForm({
           <h1 className="text-2xl font-bold pt-5">Create your Account</h1>
         </div>
         <Field>
-          <FieldLabel htmlFor="name">Full Name</FieldLabel>
+          <FieldLabel htmlFor="name">Username</FieldLabel>
           <Input id="name" type="text" placeholder="Damian Reyes" required />
         </Field>
         <Field>
