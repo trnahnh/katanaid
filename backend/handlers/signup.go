@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"encoding/json"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -102,6 +103,9 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, `{"error": "Failed to generate token"}`, http.StatusInternalServerError)
 		return
 	}
+
+	// Log successful signup
+	log.Printf("New user signed up: %s (%s)", strings.ToLower(req.Username), strings.ToLower(req.Email))
 
 	// Return success response
 	w.Header().Set("Content-Type", "application/json")
