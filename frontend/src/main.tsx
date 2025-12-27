@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.tsx'
 import LandingPage from './pages/LandingPage.tsx'
 import LoginPage from './pages/LoginPage.tsx'
+import SignupPage from './pages/SignupPage.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
         <Route element={<App />}>
           <Route path='/' element={<LandingPage />} />
           <Route path='/login' element={<LoginPage />} />
+          <Route path='/signup' element={<SignupPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
