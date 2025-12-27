@@ -21,6 +21,7 @@ func main() {
 	// Register health endpoint
 	r.Get("/health", handlers.Health)
 	r.Post("/signup", handlers.Signup)
+	r.Post("/login", handlers.Login)
 
 	// Start server
 	fmt.Println("Server is running on port 8080")
