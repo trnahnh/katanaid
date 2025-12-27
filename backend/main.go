@@ -8,6 +8,7 @@ import (
 	"katanaid/handlers"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 )
 
 func main() {
@@ -17,6 +18,15 @@ func main() {
 
 	// Initialize router
 	r := chi.NewRouter()
+
+	// CORS middleware
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173", "https://katanaid.com"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
 
 	// Register health endpoint
 	r.Get("/health", handlers.Health)
