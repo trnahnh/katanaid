@@ -1,23 +1,26 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { useNavigate } from "react-router-dom"
-import logo from '/logo.svg'
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
+import logo from "/logo.svg";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-    <form className={cn("flex flex-col gap-6 max-w-sm w-full", className)} {...props}>
+    <form
+      className={cn("flex flex-col gap-6 max-w-sm w-full", className)}
+      {...props}
+    >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <img src={logo} className="w-20"></img>
@@ -29,15 +32,30 @@ export function SignupForm({
         </Field>
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="damian@email.com" required />
+          <Input
+            id="email"
+            type="email"
+            placeholder="damian@email.com"
+            required
+          />
         </Field>
         <Field>
           <FieldLabel htmlFor="password">Password</FieldLabel>
-          <Input id="password" type="password" placeholder="••••••••" required />
+          <Input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            required
+          />
         </Field>
         <Field>
           <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
-          <Input id="confirm-password" type="password" placeholder="••••••••" required />
+          <Input
+            id="confirm-password"
+            type="password"
+            placeholder="••••••••"
+            required
+          />
         </Field>
         <Field>
           <Button type="submit">Create Account</Button>
@@ -54,10 +72,11 @@ export function SignupForm({
             Sign up with GitHub
           </Button>
           <FieldDescription className="px-6 text-center">
-            Already have an account? <a onClick={() => navigate('/login')}>Log in</a>
+            Already have an account?{" "}
+            <a onClick={() => navigate("/login")}>Log in</a>
           </FieldDescription>
         </Field>
       </FieldGroup>
     </form>
-  )
+  );
 }
