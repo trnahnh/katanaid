@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { axiosInstance } from "../lib/axios";
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export const useAuthStore = create<AuthStore>()(
   persist(
@@ -26,14 +27,14 @@ export const useAuthStore = create<AuthStore>()(
               email: res.data.email,
             },
           });
-          // TODO: Success message
+          toast.success("Account created successfully.");
         } catch (error: unknown) {
           if (error instanceof AxiosError) {
             console.log("Axios error:", error.response?.data);
-            // TODO: Error message
+            toast.error("Error creating account: " + error);
           } else {
             console.log("Unknown error:", error);
-            // TODO: Error message
+            toast.error("Error creating account: " + error);
           }
         } finally {
           set({ isSigningUp: false });
@@ -55,9 +56,10 @@ export const useAuthStore = create<AuthStore>()(
         } catch (error: unknown) {
           if (error instanceof AxiosError) {
             console.log("Axios error:", error);
-            // TODO: error message
+            toast.error("Error logging in: " + error);
           } else {
             console.log("Unknown error:", error);
+            toast.error("Error logging in: " + error);
           }
         } finally {
           set({ isLoggingIn: false });
