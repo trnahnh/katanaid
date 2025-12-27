@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/joho/godotenv"
 )
 
 // Database connection pool
@@ -15,12 +14,6 @@ var DB *pgxpool.Pool
 
 // Connect initializes the database connection pool
 func Connect() {
-	// Load environment variables
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("Warning: .env file not found")
-	}
-
 	// Get database URL from environment variables
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
