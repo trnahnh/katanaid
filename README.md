@@ -14,6 +14,11 @@ Anh Tran & Khiem Nguyen
 - [ ] Setup OAuth (Google, GitHub) - Anh
 - [ ] Deploy backend - Anh
 - [ ] Add endpoint for contact - Anh
+- [ ] POST /api/upload - Accept image/video/audio file - Anh
+- [ ] POST /api/analyze - Send file to detection API, return result - Anh
+- [ ] GET /api/history - List user's past analyses - Anh
+- [ ] Store analysis results in PostgreSQL - Anh
+
 ### Frontend - React & Tailwind CSS
 - [x] Add landing page - Khiem
 - [X] Add navbar - Khiem
@@ -21,5 +26,16 @@ Anh Tran & Khiem Nguyen
 - [ ] Add contact us section - Khiem
 - [ ] Cursor effect on homepage - Khiem
 - [ ] Add 404 page - Khiem
-### AI/ML Applications
-- No idea yet
+- [ ] Build upload dropzone component - Khiem
+- [ ] Build analysis page (/analyze) - Khiem
+- [ ] Build result card component (real/fake, confidence) - Khiem
+- [ ] Build history page (/history) - Khiem
+- [ ] Add loading state for analysis - Khiem
+
+### AI/ML Integration
+- [ ] Research deepfake detection APIs (Sightengine, Sensity, Hive)
+- [ ] Sign up for API free tier
+- [ ] Integrate detection API with /api/analyze endpoint
+- [ ] Support image detection first
+- [ ] Add video detection
+- [ ] Add audio detection
