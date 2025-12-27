@@ -12,7 +12,6 @@ Anh Tran & Khiem Nguyen
 - [x] Connect PostgreSQL - Anh
 - [ ] Connect auth end2end - Anh
 - [ ] Setup OAuth (Google, GitHub) - Anh
-- [ ] Deploy backend - Anh
 - [ ] Add endpoint for contact - Anh
 - [ ] POST /api/upload - Accept image/video/audio file - Anh
 - [ ] POST /api/analyze - Send file to detection API, return result - Anh
@@ -39,3 +38,9 @@ Anh Tran & Khiem Nguyen
 - [ ] Support image detection first
 - [ ] Add video detection
 - [ ] Add audio detection
+
+### Deployment
+- [x] Deploy frontend - Khiem
+- [ ] Deploy backend - Anh
+- [ ] Dockerize backend
+- [ ] Dockerize frontend
