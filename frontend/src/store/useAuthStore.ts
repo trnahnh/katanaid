@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { axiosInstance } from "../src/lib/axios";
+import { axiosInstance } from "../lib/axios";
 import { AxiosError } from "axios";
 
 export const useAuthStore = create<AuthStore>()(

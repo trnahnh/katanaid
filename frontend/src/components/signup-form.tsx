@@ -10,16 +10,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import logo from "/logo.svg";
+import { useState } from "react";
+import { useAuthStore} from '../store/useAuthStore'
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const {signup, isSigningUp} = useAuthStore();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    signup({
+      username: username,
+      email: email,
+      password: password,
+    })
+  }
+
   const navigate = useNavigate();
   return (
     <form
       className={cn("flex flex-col gap-6 max-w-sm w-full", className)}
       {...props}
+      onSubmit={handleSubmit}
     >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
@@ -28,7 +47,14 @@ export function SignupForm({
         </div>
         <Field>
           <FieldLabel htmlFor="name">Username</FieldLabel>
-          <Input id="name" type="text" placeholder="Damian Reyes" required />
+          <Input
+            id="name"
+            type="text"
+            placeholder="Damian Reyes"
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </Field>
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -37,6 +63,8 @@ export function SignupForm({
             type="email"
             placeholder="damian@email.com"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Field>
         <Field>
@@ -46,6 +74,7 @@ export function SignupForm({
             type="password"
             placeholder="••••••••"
             required
+            value={password} onChange={(e) => setPassword(e.target.value)}
           />
         </Field>
         <Field>
@@ -55,6 +84,7 @@ export function SignupForm({
             type="password"
             placeholder="••••••••"
             required
+            value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Field>
         <Field>
