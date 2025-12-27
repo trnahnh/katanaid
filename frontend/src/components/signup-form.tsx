@@ -54,7 +54,7 @@ export function SignupForm({
             Sign up with GitHub
           </Button>
           <FieldDescription className="px-6 text-center">
-            Already have an account? <a onClick={() => navigate('/login')}>Login</a>
+            Already have an account? <a onClick={() => navigate('/login')}>Log in</a>
           </FieldDescription>
         </Field>
       </FieldGroup>
