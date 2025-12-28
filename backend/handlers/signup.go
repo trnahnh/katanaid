@@ -18,25 +18,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// SignupRequest is the expected JSON body
-type SignupRequest struct {
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
-// SignupResponse is the success response
-type SignupResponse struct {
-	Token    string `json:"token"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Message  string `json:"message"`
-}
-
-type ErrorResponse struct {
-	Error string `json:"error"`
-}
-
 // Signup handles POST /signup requests
 func Signup(w http.ResponseWriter, r *http.Request) {
 	var req SignupRequest
@@ -135,7 +116,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	// Log successful signup
 	log.Printf("New user signed up: %s - %s", username, email)
 
-	writeJSON(w, http.StatusCreated, SignupResponse{
+	writeJSON(w, http.StatusCreated, SuccessResponse{
 		Token: tokenString,
 		Username: username,
 		Email: email,

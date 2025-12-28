@@ -10,3 +10,21 @@ func writeJSON(w http.ResponseWriter, status int, data any) {
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(data)
 }
+
+type SignupRequest struct {
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+// SuccessResponse shared by both login and signup
+type SuccessResponse struct {
+	Token    string `json:"token"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Message  string `json:"message"`
+}
+
+type ErrorResponse struct {
+	Error string `json:"error"`
+}
