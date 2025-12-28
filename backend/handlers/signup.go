@@ -41,7 +41,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	// Decode JSON body
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		log.Print("Error decoding JSON")
+		log.Print("Error decoding JSON:", err)
 		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Something went wrong"})
 		return
 	}
