@@ -30,7 +30,7 @@ type LoginRequest struct {
 }
 
 // Shared by both login and signup
-type SuccessResponse struct {
+type AuthSuccessResponse struct {
 	Token    string `json:"token"`
 	Username string `json:"username"`
 	Email    string `json:"email"`

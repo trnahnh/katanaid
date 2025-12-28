@@ -116,11 +116,11 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	// Log successful signup
 	log.Printf("New user signed up: %s - %s", username, email)
 
-	writeJSON(w, http.StatusCreated, SuccessResponse{
-		Token: tokenString,
+	writeJSON(w, http.StatusCreated, AuthSuccessResponse{
+		Token:    tokenString,
 		Username: username,
-		Email: email,
-		Message: "User created successfully",
+		Email:    email,
+		Message:  "User created successfully",
 	})
 }
 
@@ -190,7 +190,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// Success response
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(SuccessResponse{
+	json.NewEncoder(w).Encode(AuthSuccessResponse{
 		Token:    tokenString,
 		Username: user.Username,
 		Email:    user.Email,
@@ -200,6 +200,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 // ---------------------------Helpers---------------------------
 var emailRegex = regexp.MustCompile(`^[^\s@]+@[^\s@]+\.[^\s@]+$`)
+
 func isValidEmail(email string) bool {
 	return emailRegex.MatchString(email)
 }
