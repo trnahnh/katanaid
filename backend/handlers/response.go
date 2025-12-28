@@ -22,7 +22,7 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
-// SuccessResponse shared by both login and signup
+// Shared by both login and signup
 type SuccessResponse struct {
 	Token    string `json:"token"`
 	Username string `json:"username"`
