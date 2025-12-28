@@ -15,15 +15,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-
-// User represents a user from the database
-type User struct {
-	ID           int
-	Username     string
-	Email        string
-	PasswordHash string
-}
-
 // Login handles POST /login requests
 func Login(w http.ResponseWriter, r *http.Request) {
 	var req LoginRequest

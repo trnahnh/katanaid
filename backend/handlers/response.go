@@ -11,6 +11,13 @@ func writeJSON(w http.ResponseWriter, status int, data any) {
 	json.NewEncoder(w).Encode(data)
 }
 
+type User struct {
+	ID           int
+	Username     string
+	Email        string
+	PasswordHash string
+}
+
 type SignupRequest struct {
 	Username string `json:"username"`
 	Email    string `json:"email"`
