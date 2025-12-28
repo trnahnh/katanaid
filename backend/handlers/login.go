@@ -21,8 +21,6 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
-// LoginResponse is the success response
-
 // User represents a user from the database
 type User struct {
 	ID           int
