@@ -145,7 +145,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+var emailRegex = regexp.MustCompile(`^[^\s@]+@[^\s@]+\.[^\s@]+$`)
 func isValidEmail(email string) bool {
-	var emailRegex = regexp.MustCompile(`^[^\s@]+@[^\s@]+\.[^\s@]+$`)
 	return emailRegex.MatchString(email)
 }
