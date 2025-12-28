@@ -109,7 +109,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			}
 			return
 		}
-		log.Print("Error creating account:", err)
+		log.Print("Error creating account in DB:", err)
 		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
 		return
 	}
@@ -127,21 +127,19 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	jwtSecret := os.Getenv("JWT_SECRET")
 	tokenString, err := token.SignedString([]byte(jwtSecret))
 	if err != nil {
-		http.Error(w, `{"error": "Failed to generate token"}`, http.StatusInternalServerError)
+		log.Print("Error signing token with secret:", err)
+		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
 	// Log successful signup
 	log.Printf("New user signed up: %s - %s", username, email)
 
-	// Return success response
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(SignupResponse{
-		Token:    tokenString,
+	writeJSON(w, http.StatusCreated, SignupResponse{
+		Token: tokenString,
 		Username: username,
-		Email:    email,
-		Message:  "User created successfully",
+		Email: email,
+		Message: "User created successfully",
 	})
 }
 
