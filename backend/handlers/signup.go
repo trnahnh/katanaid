@@ -69,6 +69,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	if !isValidEmail(email) {
 		log.Print("Invalid email format")
 		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Invalid email"})
+		return
 	}
 
 	if len(password) < 8 {
@@ -116,8 +117,8 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	// Generate JWT token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id":  userID,
-		"username": strings.ToLower(req.Username),
-		"email":    strings.ToLower(req.Email),
+		"username": username,
+		"email":    email,
 		"iat":      time.Now().Unix(),
 		"exp":      time.Now().Add(time.Hour * 24).Unix(),
 	})
