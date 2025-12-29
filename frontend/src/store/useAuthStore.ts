@@ -19,7 +19,7 @@ export const useAuthStore = create<AuthStore>()(
       }) => {
         set({ isSigningUp: true });
         try {
-          const res = await axiosInstance.post("/signup", signupData, {});
+          const res = await axiosInstance.post("/auth/signup", signupData, {});
           set({
             token: res.data.token,
             authUser: {
@@ -44,7 +44,7 @@ export const useAuthStore = create<AuthStore>()(
       login: async (loginData: { email: string; password: string }) => {
         set({ isLoggingIn: true });
         try {
-          const res = await axiosInstance.post("/login", loginData, {});
+          const res = await axiosInstance.post("/auth/login", loginData, {});
           set({
             token: res.data.token,
             authUser: {
