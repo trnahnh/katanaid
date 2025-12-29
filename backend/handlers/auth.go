@@ -110,7 +110,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		Token:    tokenString,
 		Username: username,
 		Email:    email,
-		Message:  "User created successfully",
+		Message:  "Successfully created user",
 	})
 }
 
@@ -141,7 +141,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	err = database.DB.QueryRow(
 		context.Background(),
 		"SELECT id, username, email, password_hash FROM users WHERE email = $1",
-		strings.ToLower(req.Email),
+		email,
 	).Scan(&user.ID, &user.Username, &user.Email, &user.PasswordHash)
 
 	if err != nil {
@@ -151,7 +151,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Compare password with hash
-	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(req.Password))
+	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if err != nil {
 		log.Print("Incorrect username or password")
 		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Incorrect username or password"})
@@ -169,11 +169,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	log.Printf("User logged in: %s - %s", user.Username, user.Email)
 
 	// Success response
-	writeJSON(w, http.StatusCreated, AuthSuccessResponse{
+	writeJSON(w, http.StatusOK, AuthSuccessResponse{
 		Token:    tokenString,
 		Username: user.Username,
 		Email:    user.Email,
-		Message:  "User created successfully",
+		Message:  "Successfully logged in",
 	})
 }
 
