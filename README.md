@@ -11,26 +11,30 @@ Anh Tran & Khiem Nguyen
 - [x] Set up signup/ - Anh
 - [x] Connect PostgreSQL - Anh
 - [x] Connect auth end2end - Anh
+- [x] Add endpoint for contact - Anh
+- [x] POST /api/upload - Accept image/video/audio file - Anh
+- [x] POST /api/analyze - Send file to detection API, return result - Anh
+- [x] GET /api/history - List user's past analyses - Anh
+- [x] Store analysis results in PostgreSQL - Anh
 - [ ] Setup OAuth (Google, GitHub) - Anh
-- [ ] Add endpoint for contact - Anh
-- [ ] POST /api/upload - Accept image/video/audio file - Anh
-- [ ] POST /api/analyze - Send file to detection API, return result - Anh
-- [ ] GET /api/history - List user's past analyses - Anh
-- [ ] Store analysis results in PostgreSQL - Anh
 
 ### Frontend - React & Tailwind CSS
 - [x] Add landing page - Khiem
 - [X] Add navbar - Khiem
 - [x] Add login, signup button - Khiem
-- [ ] Connect login, signup to backend - Khiem
-- [ ] Add contact us section - Khiem
+- [x] Connect login, signup to backend - Khiem
+- [x] Add dashboard - Khiem
+- [x] Add logout - Khiem
 - [ ] Cursor effect on homepage - Khiem
-- [ ] Add 404 page - Khiem
-- [ ] Build upload dropzone component - Khiem
-- [ ] Build analysis page (/analyze) - Khiem
+- [ ] Add contact us section - Khiem
 - [ ] Build result card component (real/fake, confidence) - Khiem
 - [ ] Build history page (/history) - Khiem
+- [ ] Dashboard - Display history - Khiem
+- [ ] Dashboard - Display user settings - Khiem
 - [ ] Add loading state for analysis - Khiem
+- [ ] Build upload dropzone component - Khiem
+- [ ] Build analysis page (/analyze) - Khiem
+- [ ] Add 404 page - Khiem
 
 ### AI/ML Integration
 - [ ] Research deepfake detection APIs (Sightengine, Sensity, Hive)
