@@ -30,8 +30,8 @@ export const useAuthStore = create<AuthStore>()(
           toast.success("Account created successfully.");
         } catch (error: unknown) {
           if (error instanceof AxiosError) {
-            console.log("Axios error:", error.response?.data);
-            toast.error("Error creating account: " + error);
+            console.log("Axios error:", error.response?.data.error);
+            toast.error("Error signing up: " + error.response?.data.error);
           } else {
             console.log("Unknown error:", error);
             toast.error("Error creating account: " + error);
@@ -55,8 +55,8 @@ export const useAuthStore = create<AuthStore>()(
           // TODO: success message
         } catch (error: unknown) {
           if (error instanceof AxiosError) {
-            console.log("Axios error:", error);
-            toast.error("Error logging in: " + error);
+            console.log("Axios error:", error.response?.data.error);
+            toast.error("Error logging in: " + error.response?.data.error);
           } else {
             console.log("Unknown error:", error);
             toast.error("Error logging in: " + error);
