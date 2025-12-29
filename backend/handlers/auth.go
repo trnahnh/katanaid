@@ -169,12 +169,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	log.Printf("User logged in: %s - %s", user.Username, user.Email)
 
 	// Success response
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(AuthSuccessResponse{
+	writeJSON(w, http.StatusCreated, AuthSuccessResponse{
 		Token:    tokenString,
 		Username: user.Username,
 		Email:    user.Email,
-		Message:  "Login successful",
+		Message:  "User created successfully",
 	})
 }
 
