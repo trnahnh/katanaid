@@ -30,7 +30,7 @@ export function LoginForm({
   }
 
   return (
-    <form className={cn("flex flex-col gap-6 max-w-sm w-full", className)} {...props}>
+    <form className={cn("flex flex-col gap-6 max-w-sm w-full", className)} {...props} onSubmit={handleSubmit}>
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <img src={logo} className="w-20"></img>
@@ -38,7 +38,14 @@ export function LoginForm({
         </div>
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="damian@email.com" required />
+          <Input
+            id="email"
+            type="email"
+            placeholder="damian@email.com"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </Field>
         <Field>
           <div className="flex items-center">
