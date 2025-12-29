@@ -66,8 +66,9 @@ export const useAuthStore = create<AuthStore>()(
         }
       },
 
-      logout: async () => {
+      logout: () => {
         set({ token: null, authUser: null });
+        toast.success("Successfully logged out")
       },
     }),
     {

@@ -59,7 +59,13 @@ const NavBar = () => {
               Sign in
             </Button>
           ) : (
-            <Button variant="ghost" onClick={() => logout}>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+            >
               Log out
             </Button>
           )}

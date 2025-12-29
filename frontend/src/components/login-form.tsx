@@ -1,36 +1,44 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import logo from '/logo.svg'
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
-import { useAuthStore } from "../store/useAuthStore"
-import { LucideLoader2 } from "lucide-react"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import logo from "/logo.svg";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuthStore } from "../store/useAuthStore";
+import { LucideLoader2 } from "lucide-react";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const { login, isLoggingIn } = useAuthStore()
-  const navigate = useNavigate()
+  const { login, isLoggingIn } = useAuthStore();
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    await login({ email, password })
-  }
+    e.preventDefault();
+    await login({ email, password });
+
+    if (useAuthStore.getState().token) {
+      navigate("/dashboard");
+    }
+  };
 
   return (
-    <form className={cn("flex flex-col gap-6 max-w-sm w-full", className)} {...props} onSubmit={handleSubmit}>
+    <form
+      className={cn("flex flex-col gap-6 max-w-sm w-full", className)}
+      {...props}
+      onSubmit={handleSubmit}
+    >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <img src={logo} className="w-20"></img>
@@ -68,11 +76,7 @@ export function LoginForm({
         </Field>
         <Field>
           <Button type="submit" disabled={isLoggingIn}>
-            {isLoggingIn ? (
-              <LucideLoader2 className="animate-spin" />
-            ) : (
-              "Login"
-            )}
+            {isLoggingIn ? <LucideLoader2 className="animate-spin" /> : "Login"}
           </Button>
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
@@ -109,12 +113,15 @@ export function LoginForm({
           </Button>
           <FieldDescription className="text-center">
             Don&apos;t have an account?{" "}
-            <a onClick={() => navigate('/signup')} className="underline underline-offset-4">
+            <a
+              onClick={() => navigate("/signup")}
+              className="underline underline-offset-4"
+            >
               Sign up
             </a>
           </FieldDescription>
         </Field>
       </FieldGroup>
     </form>
-  )
+  );
 }
