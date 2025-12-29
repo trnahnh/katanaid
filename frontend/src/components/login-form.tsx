@@ -67,7 +67,13 @@ export function LoginForm({
           />
         </Field>
         <Field>
-          <Button type="submit">Login</Button>
+          <Button type="submit" disabled={isLoggingIn}>
+            {isLoggingIn ? (
+              <LucideLoader2 className="animate-spin" />
+            ) : (
+              "Login"
+            )}
+          </Button>
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
         <Field className="gap-5">
