@@ -90,5 +90,5 @@ interface AuthStore {
     password: string;
   }) => Promise<void>;
   login: (loginData: { email: string; password: string }) => Promise<void>;
-  logout: () => Promise<void>;
+  logout: () => void;
 }
