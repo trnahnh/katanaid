@@ -4,7 +4,7 @@ import { LucideSearch } from "lucide-react";
 
 export function SiteHeader() {
   return (
-    <header className="flex h-15 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
+    <header className="flex h-15 shrink-0 items-center gap-2 border-b transition-[width,height]">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <Input id="search" type="text" placeholder="Search ⌘ + F" className="w-80"/>
         <Button variant={"secondary"}><LucideSearch /></Button>
