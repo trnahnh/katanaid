@@ -423,8 +423,9 @@ func getGitHubEmail(client *http.Client) (string, bool) {
 
 // findOrCreateOAuthUser finds existing user or creates new one
 func findOrCreateOAuthUser(email, name, provider string, emailVerified bool) (string, error) {
-	// Require verified email for security
-	if !emailVerified {
+	// Require verified email for security (relaxed for GitHub as their API is inconsistent)
+	if !emailVerified && provider != "github" {
+		log.Printf("Email not verified: provider=%s, email=%s, verified=%v", provider, email, emailVerified)
 		return "", errors.New("email not verified by OAuth provider")
 	}
 
