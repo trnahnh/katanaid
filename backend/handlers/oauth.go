@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
 	"katanaid/database"
@@ -31,7 +32,10 @@ var (
 )
 
 // In-memory state store (use Redis/DB in production)
-var oauthStates = make(map[string]time.Time)
+var (
+	oauthStates = make(map[string]time.Time)
+	statesMutex sync.RWMutex
+)
 
 // Errors
 var (
@@ -50,7 +54,7 @@ func InitOAuth() error {
 	requiredVars := []string{
 		"GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET",
 		"GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET",
-		"FRONTEND_URL", "JWT_SECRET",
+		"FRONTEND_URL", "BACKEND_URL", "JWT_SECRET",
 	}
 
 	for _, v := range requiredVars {
@@ -65,11 +69,13 @@ func InitOAuth() error {
 		return errors.New("JWT_SECRET must be at least 32 characters")
 	}
 
+	backendURL := os.Getenv("BACKEND_URL")
+
 	// Initialize Google OAuth
 	googleOAuthConfig = &oauth2.Config{
 		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
-		RedirectURL:  os.Getenv("FRONTEND_URL") + "/auth/google/callback",
+		RedirectURL:  backendURL + "/auth/google/callback",
 		Scopes:       []string{"openid", "email", "profile"},
 		Endpoint:     google.Endpoint,
 	}
@@ -78,7 +84,7 @@ func InitOAuth() error {
 	githubOAuthConfig = &oauth2.Config{
 		ClientID:     os.Getenv("GITHUB_CLIENT_ID"),
 		ClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
-		RedirectURL:  os.Getenv("FRONTEND_URL") + "/auth/github/callback",
+		RedirectURL:  backendURL + "/auth/github/callback",
 		Scopes:       []string{"user:email", "read:user"},
 		Endpoint:     github.Endpoint,
 	}
@@ -98,13 +104,18 @@ func generateStateToken() (string, error) {
 	state := base64.URLEncoding.EncodeToString(b)
 
 	// Store with 10-minute expiration
+	statesMutex.Lock()
 	oauthStates[state] = time.Now().Add(10 * time.Minute)
+	statesMutex.Unlock()
 
 	return state, nil
 }
 
 // validateStateToken checks if state token is valid and removes it
 func validateStateToken(state string) bool {
+	statesMutex.Lock()
+	defer statesMutex.Unlock()
+
 	expiry, exists := oauthStates[state]
 	if !exists {
 		return false
@@ -122,11 +133,13 @@ func cleanupExpiredStates() {
 
 	for range ticker.C {
 		now := time.Now()
+		statesMutex.Lock()
 		for state, expiry := range oauthStates {
 			if now.After(expiry) {
 				delete(oauthStates, state)
 			}
 		}
+		statesMutex.Unlock()
 	}
 }
 

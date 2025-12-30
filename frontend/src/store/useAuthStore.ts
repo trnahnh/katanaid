@@ -3,6 +3,15 @@ import { persist } from "zustand/middleware";
 import { axiosInstance } from "../lib/axios";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { jwtDecode } from "jwt-decode";
+
+interface JWTPayload {
+  user_id: number;
+  username: string;
+  email: string;
+  exp: number;
+  iat: number;
+}
 
 export const useAuthStore = create<AuthStore>()(
   persist(
@@ -11,6 +20,22 @@ export const useAuthStore = create<AuthStore>()(
       token: null,
       isSigningUp: false,
       isLoggingIn: false,
+
+      setOAuthToken: (token: string) => {
+        try {
+          const decoded = jwtDecode<JWTPayload>(token);
+          set({
+            token,
+            authUser: {
+              username: decoded.username,
+              email: decoded.email,
+            },
+          });
+          toast.success("Logged in successfully.");
+        } catch {
+          toast.error("Invalid token received.");
+        }
+      },
 
       signup: async (signupData: {
         username: string;
@@ -85,6 +110,7 @@ interface AuthStore {
   token: string | null;
   isSigningUp: boolean;
   isLoggingIn: boolean;
+  setOAuthToken: (token: string) => void;
   signup: (signupData: {
     username: string;
     email: string;

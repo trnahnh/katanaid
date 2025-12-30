@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import DashboardPage from './pages/Dashboard'
+import AuthCallbackPage from './pages/AuthCallbackPage'
 
 const PublicLayout = () => (
   <>
@@ -28,6 +29,7 @@ function App() {
           <Route path='/login' element={<LoginPage/>}/>
           <Route path='/signup' element={<SignupPage/>}/>
         </Route>
+        <Route path='/auth/callback' element={<AuthCallbackPage/>}/>
         <Route element={<DashboardLayout />}>
           <Route path='/dashboard' element={<DashboardPage/>}/>
         </Route>

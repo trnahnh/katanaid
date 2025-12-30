@@ -50,7 +50,9 @@ func main() {
 	defer database.Close()
 
 	// Initialize OAuth
-	handlers.InitOAuth()
+	if err := handlers.InitOAuth(); err != nil {
+		log.Fatal("Failed to initialize OAuth:", err)
+	}
 
 	// Initialize router
 	r := chi.NewRouter()
