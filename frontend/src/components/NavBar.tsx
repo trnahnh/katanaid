@@ -11,8 +11,6 @@ import Logo from "./Logo";
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
 
