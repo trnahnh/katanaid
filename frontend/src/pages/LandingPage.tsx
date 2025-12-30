@@ -7,7 +7,7 @@ const LandingPage = () => {
   return (
     <>
       {/* Hero Section */}
-      <div className="flex flex-col justify-center pt-20 items-center">
+      <div className="flex flex-col justify-center pt-10 md:pt-20 items-center">
         <Button variant="outline" className="group overflow-hidden rounded-2xl">
           Check for deepfake
           <LucideSearch className="group-hover:hidden transition-all" />
