@@ -135,7 +135,7 @@ const LandingPage = () => {
         <AnimationContainer delay={0.1}>
           <LampContainer>
             <div className="flex flex-col items-center justify-center relative w-full text-center max-w-3xl">
-              <h2 className="bg-linear-to-b from-neutral-200 to-neutral-400 py-4 bg-clip-text text-center text-5xl md:text-7xl leading-[1.15]! font-medium font-heading tracking-tight text-transparent">
+              <h2 className="bg-linear-to-b from-neutral-200 to-neutral-400 pt-7 bg-clip-text text-center text-5xl md:text-7xl leading-[1.15]! font-medium font-heading tracking-tight text-transparent">
                 Start protecting your platform today
               </h2>
               <p className="text-accent-foreground mt-4 max-w-md mx-auto">
