@@ -6,7 +6,6 @@ import MaxWidthWrapper from "@/components/ui/max-width-container";
 import { BentoCard, BentoGrid, CARDS } from "@/components/ui/bento-grid";
 import { Button } from "@/components/ui/button";
 import MagicBadge from "@/components/ui/magic-badge";
-import GridBackground from "@/components/GridBackground";
 import { LampContainer } from "@/components/ui/lamb";
 import Footer from "@/components/Footer";
 
