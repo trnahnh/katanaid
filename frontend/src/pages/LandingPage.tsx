@@ -20,7 +20,7 @@ const LandingPage = () => {
         gridSize={32}
       />
 
-      {/* Hero Section */}
+      {/* ----------------------------------Hero Section---------------------------------- */}
       <div className="relative z-10 flex flex-col justify-center pt-10 md:pt-20 items-center">
         <MagicBadge title="AI verification suite" />
         <h1 className="text-5xl md:text-8xl leading-tight text-center mt-5 max-w-5xl">
@@ -61,7 +61,7 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* Image Gallery - Bento Grid */}
+      {/* ----------------------------------Image Bento Grid---------------------------------- */}
       <div className="relative z-10 py-25 px-4 w-full max-w-6xl mx-auto">
         {/* Glow behind grid */}
         <div className="absolute inset-10 bg-blue-500/20 blur-3xl rounded-full pointer-events-none" />
@@ -103,7 +103,7 @@ const LandingPage = () => {
         <div className="absolute bottom-10 left-0 right-0 h-1/3 bg-linear-to-t from-background from-30% via-background/50 to-transparent pointer-events-none rounded-2xl" />
       </div>
 
-      {/* Features section */}
+      {/* ----------------------------------Features section---------------------------------- */}
       <MaxWidthWrapper className="py-15 relative z-10">
         <AnimationContainer delay={0.1}>
           <div className="flex flex-col w-full items-center lg:items-center justify-center py-8">
@@ -129,8 +129,8 @@ const LandingPage = () => {
         </AnimationContainer>
       </MaxWidthWrapper>
 
-      {/* CTA section */}
-      <MaxWidthWrapper className="my-15 pb-60 max-w-[100vw] overflow-x-hidden scrollbar-hide">
+      {/* ----------------------------------CTA section---------------------------------- */}
+      <MaxWidthWrapper className="my-15 pb-80 max-w-[80vw] overflow-x-hidden scrollbar-hide">
         <AnimationContainer delay={0.1}>
           <LampContainer>
             <div className="flex flex-col items-center justify-center relative w-full text-center max-w-3xl">
