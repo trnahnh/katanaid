@@ -17,7 +17,7 @@ const Footer = () => {
                         <p className="text-muted-foreground mt-4 text-sm text-start">
                             Manage your as with ease.
                         </p>
-                        <span className="mt-4 text-neutral-200 text-sm flex items-center">
+                        <span className="mt-4 text-foreground/80 text-sm flex items-center">
                             Made by <a href="https://shreyas-sihasane.vercel.app/" className="font-semibold ml-1">Shreyas</a>
                         </span>
                     </div>
@@ -26,8 +26,8 @@ const Footer = () => {
                 <div className="grid-cols-2 gap-8 grid mt-16 xl:col-span-2 xl:mt-0">
                     <div className="md:grid md:grid-cols-2 md:gap-8">
                         <AnimationContainer delay={0.2}>
-                            <div className="">
-                                <h3 className="text-base font-medium text-white">
+                            <div>
+                                <h3 className="text-base font-medium text-foreground">
                                     Product
                                 </h3>
                                 <ul className="mt-4 text-sm text-muted-foreground">
@@ -56,11 +56,11 @@ const Footer = () => {
                         </AnimationContainer>
                         <AnimationContainer delay={0.3}>
                             <div className="mt-10 md:mt-0 flex flex-col">
-                                <h3 className="text-base font-medium text-white">
+                                <h3 className="text-base font-medium text-foreground">
                                     Integrations
                                 </h3>
                                 <ul className="mt-4 text-sm text-muted-foreground">
-                                    <li className="">
+                                    <li>
                                         <a href="" className="hover:text-foreground transition-all duration-300">
                                             Facebook
                                         </a>
@@ -86,8 +86,8 @@ const Footer = () => {
                     </div>
                     <div className="md:grid md:grid-cols-2 md:gap-8">
                         <AnimationContainer delay={0.4}>
-                            <div className="">
-                                <h3 className="text-base font-medium text-white">
+                            <div>
+                                <h3 className="text-base font-medium text-foreground">
                                     Resources
                                 </h3>
                                 <ul className="mt-4 text-sm text-muted-foreground">
@@ -106,11 +106,11 @@ const Footer = () => {
                         </AnimationContainer>
                         <AnimationContainer delay={0.5}>
                             <div className="mt-10 md:mt-0 flex flex-col">
-                                <h3 className="text-base font-medium text-white">
+                                <h3 className="text-base font-medium text-foreground">
                                     Company
                                 </h3>
                                 <ul className="mt-4 text-sm text-muted-foreground">
-                                    <li className="">
+                                    <li>
                                         <a href="" className="hover:text-foreground transition-all duration-300">
                                             About Us
                                         </a>
