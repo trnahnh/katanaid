@@ -160,8 +160,8 @@ const BentoCard = ({
   <div
     key={name}
     className={cn(
-      "group relative col-span-3 flex flex-col justify-between border border-border overflow-hidden rounded-xl",
-      "bg-slate-950 [box-shadow:0_-90px_120px_-90px_#13004A_inset]",
+      "group relative col-span-3 flex flex-col justify-between border border-border/50 overflow-hidden rounded-xl",
+      "bg-slate-950/60 [box-shadow:0_-90px_120px_-90px_#8A8AFF22_inset,0_90px_120px_-90px_#040010_inset]",
       className
     )}
   >
