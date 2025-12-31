@@ -23,18 +23,18 @@ const LandingPage = () => {
       {/* Hero Section */}
       <div className="relative z-10 flex flex-col justify-center pt-10 md:pt-20 items-center">
         <MagicBadge title="AI verification suite" />
-        <h1 className="text-7xl text-center mt-5 max-w-3xl leading-24">
+        <h1 className="text-5xl md:text-8xl leading-tight text-center mt-5 max-w-5xl">
           The{" "}
-          <span className="bg-linear-to-r  from-blue-500 to-cyan-300  bg-clip-text text-transparent drop-shadow-[0_0_9px_rgba(60,130,240,0.8)]">
+          <span className="bg-linear-to-r  from-blue-500 to-cyan-300  bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(60,130,240,0.8)]">
             Verification Blade
           </span>{" "}
           Your Platform{" "}
-          <span className="bg-linear-to-r from-purple-500 to-pink-300 bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(190,10,190,1)] ">
+          <span className="bg-linear-to-r from-white to-slate-400 bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(190,190,190,1)] ">
             Needs
           </span>
         </h1>
         <div className="text-center mt-6 text-accent-foreground">
-          <p className="text-md max-w-xl">
+          <p className="text-sm md:text-xl max-w-xl">
             Deepfakes, bots, AI-generated spam - they're everywhere. <br />
             Katana gives you{" "}
             <span className="bg-linear-to-r from-blue-500 to-white bg-clip-text text-transparent">
@@ -42,9 +42,8 @@ const LandingPage = () => {
             </span>{" "}
             to catch them all.
             <br />
-            Start{" "}
-            <span className="bg-linear-to-r from-white to-amber-400 bg-clip-text text-transparent">
-              <b>free</b>
+            <span className="bg-linear-to-r from-white to-amber-300 bg-clip-text text-transparent">
+              Start free
             </span>
             , scale when you're ready.
           </p>
@@ -63,7 +62,7 @@ const LandingPage = () => {
       </div>
 
       {/* Image Gallery - Bento Grid */}
-      <div className="relative z-10 py-15 px-4 w-full max-w-5xl mx-auto">
+      <div className="relative z-10 py-25 px-4 w-full max-w-6xl mx-auto">
         {/* Glow behind grid */}
         <div className="absolute inset-10 bg-blue-500/20 blur-3xl rounded-full pointer-events-none" />
         <div className="relative grid grid-cols-3 grid-rows-2 gap-4 h-125">
@@ -115,7 +114,7 @@ const LandingPage = () => {
                 <b>Katana precision ✨!</b>
               </span>
             </h2>
-            <p className="mt-4 text-center lg:text-center text-lg text-accent-foreground max-w-lg">
+            <p className="text-sm md:text-xl mt-4 text-center lg:text-center text-accent-foreground max-w-lg">
               Detect deepfakes, block bots, and catch AI-generated content - all
               through one simple API.
             </p>
@@ -135,12 +134,11 @@ const LandingPage = () => {
         <AnimationContainer delay={0.1}>
           <LampContainer>
             <div className="flex flex-col items-center justify-center relative w-full text-center max-w-3xl">
-              <h2 className="bg-linear-to-b from-neutral-200 to-neutral-400 pt-7 bg-clip-text text-center text-5xl md:text-7xl leading-[1.15]! font-medium font-heading tracking-tight text-transparent">
+              <h2 className="text-3xl md:text-5xl bg-linear-to-b from-neutral-200 to-neutral-400 pt-7 bg-clip-text text-center leading-[1.15]! font-medium font-heading tracking-tight text-transparent">
                 Start protecting your platform today
               </h2>
-              <p className="text-accent-foreground mt-4 max-w-md mx-auto">
-                Integrate in minutes - for free. One API call to verify images,
-                detect bots, and catch AI-generated content before it hits your
+              <p className="text-sm md:text-xl text-accent-foreground mt-4 max-w-md mx-auto">
+                Integrate in minutes - for free. One API call to verify contents before it hits your
                 platform.
               </p>
               <div className="mt-6">
