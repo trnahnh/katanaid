@@ -106,7 +106,7 @@ const GridBackground = ({
   }, [gridSize, glowRadius, glowIntensity, glowColor]);
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   );
