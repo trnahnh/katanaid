@@ -22,30 +22,31 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <div className="relative z-10 flex flex-col justify-center pt-10 md:pt-20 items-center">
-        <MagicBadge title="Check for deepfake" />          
-        <h1 className="font-bold text-7xl text-center mt-5 max-w-2xl leading-24">
-          Cut through{" "}
+        <MagicBadge title="AI verification suite" />
+        <h1 className="font-bold text-7xl text-center mt-5 max-w-3xl leading-24">
+          The{" "}
           <span className="bg-linear-to-r from-purple-500 to-pink-300 drop-shadow-[0_0_5px_rgba(190,10,190,1)] bg-clip-text text-transparent">
-            Deepfake
+            Verification Blade
           </span>{" "}
-          Content with{" "}
+          Your Platform{" "}
           <span className="bg-linear-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-[0_0_9px_rgba(60,130,240,0.8)]">
-            Precision
+            Needs
           </span>
         </h1>
         <div className="text-center mt-6">
           <p className="text-md max-w-xl">
-            Upload any image, video or audio. Get instant verification. <br />
-            Let{" "}
+            Deepfakes, bots, AI-generated spam - they're everywhere. <br />
+            Katana gives you{" "}
             <span className="bg-linear-to-r from-blue-500 to-white bg-clip-text text-transparent">
-              <b>AI-powered analysis 🔎</b>
+              <b>one API</b>
             </span>{" "}
-            catch what the eye can't.
+            to catch them all.
             <br />
-            Completely for{" "}
+            Start{" "}
             <span className="bg-linear-to-r from-white to-amber-400 bg-clip-text text-transparent">
-              <b>free ✨!</b>
+              <b>free</b>
             </span>
+            , scale when you're ready.
           </p>
         </div>
         <div className="flex items-center justify-center gap-4 mt-10">
