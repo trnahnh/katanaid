@@ -131,7 +131,7 @@ const LandingPage = () => {
       </MaxWidthWrapper>
 
       {/* CTA section */}
-      <MaxWidthWrapper className="my-15 max-w-[100vw] overflow-x-hidden scrollbar-hide">
+      <MaxWidthWrapper className="my-15 pb-60 max-w-[100vw] overflow-x-hidden scrollbar-hide">
         <AnimationContainer delay={0.1}>
           <LampContainer>
             <div className="flex flex-col items-center justify-center relative w-full text-center max-w-3xl">
