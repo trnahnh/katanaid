@@ -14,11 +14,11 @@ const LandingPage = () => {
     <>
       {/* ----------------------------------Hero Section---------------------------------- */}
       <div className="relative z-10 flex flex-col justify-center pt-10 md:pt-20 items-center">
-        <MagicBadge title="AI verification suite" />
-        <h1 className="text-5xl md:text-8xl leading-tight text-center mt-5 max-w-5xl">
+        <MagicBadge title="AI Authentication Suite" />
+        <h1 className="text-5xl md:text-8xl leading-tight text-center mt-5 max-w-6xl">
           The{" "}
           <span className="bg-linear-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-[0_0_5px_--theme(--color-blue-500/80%)]">
-            Verification Blade
+            Authentication Blade
           </span>{" "}
           Your Platform{" "}
           <span className="bg-linear-to-r from-white to-slate-400 bg-clip-text text-transparent drop-shadow-[0_0_5px_var(--color-slate-400)]">
@@ -27,12 +27,12 @@ const LandingPage = () => {
         </h1>
         <div className="text-center mt-6 text-accent-foreground">
           <p className="text-sm md:text-xl max-w-xl">
-            Deepfakes, bots, AI-generated spam - they're everywhere. <br />z
+            Authentication, avatars, usernames, spam protection <br />
             Katana gives you{" "}
             <span className="bg-linear-to-r from-blue-500 to-white bg-clip-text text-transparent">
-              <b>one API</b>
+              one Toolkit
             </span>{" "}
-            to catch them all.
+            to nail them all.
             <br />
             <span className="bg-linear-to-r from-white to-amber-300 bg-clip-text text-transparent">
               Start free
@@ -43,7 +43,7 @@ const LandingPage = () => {
         <div className="flex items-center justify-center gap-4 mt-10">
           <Button asChild>
             <Link to="/dashboard" className="flex items-center">
-              Start verifying for free
+              Start authenticating for free
               <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
           </Button>
@@ -101,7 +101,7 @@ const LandingPage = () => {
           <div className="flex flex-col w-full items-center justify-center py-8">
             <MagicBadge title="Features" />
             <h2 className="text-center text-3xl md:text-5xl leading-tight font-medium font-heading text-foreground mt-6">
-              Cut the AI slop with{" "}
+              Authentication with{" "}
               <span className="bg-linear-to-r from-white to-blue-500 bg-clip-text text-transparent">
                 <b>Katana precision ✨!</b>
               </span>
