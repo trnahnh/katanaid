@@ -101,14 +101,13 @@ const LandingPage = () => {
           <div className="flex flex-col w-full items-center justify-center py-8">
             <MagicBadge title="Features" />
             <h2 className="text-center text-3xl md:text-5xl leading-tight font-medium font-heading text-foreground mt-6">
-              Authentication with{" "}
+              Plug what you{" "}
               <span className="bg-linear-to-r from-white to-blue-500 bg-clip-text text-transparent">
-                <b>Katana precision ✨!</b>
+                need
               </span>
             </h2>
             <p className="text-sm md:text-xl mt-4 text-center text-accent-foreground max-w-lg">
-              Detect deepfakes, block bots, and catch AI-generated content - all
-              through one simple API.
+              Use the full suite or just the pieces you want. One script tag, done.
             </p>
           </div>
         </AnimationContainer>
@@ -127,15 +126,14 @@ const LandingPage = () => {
           <LampContainer>
             <div className="flex flex-col items-center justify-center relative w-full text-center max-w-3xl">
               <h2 className="text-3xl md:text-5xl pt-7 bg-clip-text text-center leading-tight font-medium font-heading tracking-tight">
-                Start protecting your platform today
+                Ready to ship?
               </h2>
               <p className="text-sm md:text-xl text-accent-foreground mt-4 max-w-md mx-auto">
-                Integrate in minutes - for free. One API call to verify contents before it hits your
-                platform.
+                Grab your API key and integrate in minutes. Free forever for most apps.
               </p>
               <div className="mt-6">
                 <Button>
-                  Get started now.
+                  Get your API key
                   <ArrowRightIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
