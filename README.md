@@ -9,10 +9,9 @@ Deepfake detection for images and videos.
 - **Frontend:** React
 - **Backend:** Go
 - **Database:** PostgreSQL
-- **Auth:** JWT, OAuth
 
-## Local Development
-
+## Development & Contributing
+We are open to contribution to the project. Contact us via khiem@sukaseven.com or tran3ah@mail.uc.edu to get invited to the project.  
 ### Prerequisites
 
 - Node.js 18+
