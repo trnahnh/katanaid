@@ -13,32 +13,32 @@ export const CARDS = [
   {
     Icon: CodeIcon,
     name: "Drop-in Components",
-    description: "One tag. Full feature. Your app, not your weekend.",
+    description: "React, Vue Components, multiple frameworks supported and counting.",
     href: "#",
     cta: "Quick start",
     className: "col-span-3 lg:col-span-1",
     background: (
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating component tags */}
-        <div className="absolute top-12 left-6 right-6 transition-all duration-500 ease-out group-hover:translate-y-[-8px]">
+        <div className="absolute top-8 left-6 right-6 transition-all duration-500 ease-out group-hover:translate-y-[-8px]">
           <div className="space-y-3">
             <div className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.03] border border-white/10 backdrop-blur-sm">
               <div className="w-6 h-6 rounded bg-white/10 flex items-center justify-center">
                 <KeyRoundIcon className="w-3 h-3 text-foreground/50" />
               </div>
-              <code className="text-[11px] text-foreground/70 font-mono">&lt;katana-login /&gt;</code>
+              <code className="text-[14px] text-foreground/70 font-mono">&lt;KatanaLogin /&gt;</code>
             </div>
             <div className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.03] border border-white/10 backdrop-blur-sm ml-2">
               <div className="w-6 h-6 rounded bg-white/10 flex items-center justify-center">
                 <SwordIcon className="w-3 h-3 text-foreground/50" />
               </div>
-              <code className="text-[11px] text-foreground/70 font-mono">&lt;katana-captcha /&gt;</code>
+              <code className="text-[14px] text-foreground/70 font-mono">&lt;KatanaCaptcha /&gt;</code>
             </div>
             <div className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.03] border border-white/10 backdrop-blur-sm">
               <div className="w-6 h-6 rounded bg-white/10 flex items-center justify-center">
                 <SparklesIcon className="w-3 h-3 text-foreground/50" />
               </div>
-              <code className="text-[11px] text-foreground/70 font-mono">&lt;katana-avatar /&gt;</code>
+              <code className="text-[14px] text-foreground/70 font-mono">&lt;KatanaAvatar /&gt;</code>
             </div>
           </div>
         </div>
@@ -49,8 +49,8 @@ export const CARDS = [
   },
   {
     Icon: KeyRoundIcon,
-    name: "Auth",
-    description: "Email, OAuth, sessions, tokens. The boring stuff, handled.",
+    name: "Authentication",
+    description: "Social Login (OAuth), Email verification, OTP, Sessions. All handled for you.",
     href: "#",
     cta: "View docs",
     className: "col-span-3 lg:col-span-2",
@@ -111,8 +111,8 @@ export const CARDS = [
   },
   {
     Icon: SwordIcon,
-    name: "Katana CAPTCHA",
-    description: "One slash. Human verified. Bots don't stand a chance.",
+    name: "Spam Prevention",
+    description: "Unique and Fun CAPTCHA. Trial abuse, Spam account Prevention. Keep you serving unique and valuable customers.",
     href: "#",
     cta: "Try it",
     className: "col-span-3 lg:col-span-2",
@@ -183,15 +183,15 @@ export const CARDS = [
   },
   {
     Icon: SparklesIcon,
-    name: "AI Identity",
-    description: "Generated avatars. Smart usernames. Every signup feels fresh.",
+    name: "AI Identity Helper",
+    description: "Generated avatars. Smart usernames. Every onboarding feels fresh.",
     className: "col-span-3 lg:col-span-1",
     href: "#",
     cta: "See styles",
     background: (
       <div className="absolute inset-0 overflow-hidden">
         {/* Avatar showcase */}
-        <div className="absolute top-10 left-0 right-0 flex justify-center transition-all duration-500 group-hover:scale-105">
+        <div className="absolute top-8 left-0 right-0 flex justify-center transition-all duration-500 group-hover:scale-105">
           <div className="relative">
             {/* Central avatar - larger */}
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/20 to-white/5 shadow-xl shadow-black/20 ring-2 ring-white/10 flex items-center justify-center overflow-hidden">
@@ -206,19 +206,19 @@ export const CARDS = [
             <div className="absolute -right-3 -bottom-3 w-7 h-7 rounded-lg bg-gradient-to-br from-white/10 to-white/5 shadow-lg shadow-black/10 ring-1 ring-white/10 -rotate-12" />
 
             {/* Sparkle effects */}
-            <div className="absolute -top-2 -right-2 w-2 h-2">
+            <div className="absolute -top-2 -right-6 size-5">
               <SparklesIcon className="w-full h-full text-white/40" />
             </div>
-            <div className="absolute -bottom-1 -left-6 w-1.5 h-1.5">
+            <div className="absolute -bottom-1 -left-9 size-5">
               <SparklesIcon className="w-full h-full text-white/30" />
             </div>
           </div>
         </div>
 
         {/* Username suggestions */}
-        <div className="absolute bottom-45 left-4 right-4 transition-all duration-500 group-hover:translate-y-[-4px]">
-          <div className="text-[10px] text-muted-foreground mb-2 flex items-center gap-1">
-            <SparklesIcon className="w-3 h-3" />
+        <div className="absolute bottom-42 left-4 right-4 transition-all duration-500 group-hover:translate-y-[-4px]">
+          <div className="text-[12px] text-muted-foreground mb-2 flex items-center gap-1">
+            <SparklesIcon className="size-5" />
             <span>Suggested handles</span>
           </div>
           <div className="flex flex-wrap gap-1.5">

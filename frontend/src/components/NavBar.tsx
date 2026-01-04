@@ -91,7 +91,7 @@ const NavBar = () => {
             </Button>
           )}
           <Button variant="default">
-            Verify content <ArrowRight />
+            Build now <ArrowRight />
           </Button>
         </div>
 

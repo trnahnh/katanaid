@@ -43,7 +43,7 @@ const LandingPage = () => {
         <div className="flex items-center justify-center gap-4 mt-10">
           <Button asChild>
             <Link to="/dashboard" className="flex items-center">
-              Start authenticating for free
+              Start building for free
               <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
           </Button>
@@ -101,10 +101,11 @@ const LandingPage = () => {
           <div className="flex flex-col w-full items-center justify-center py-8">
             <MagicBadge title="Features" />
             <h2 className="text-center text-3xl md:text-5xl leading-tight font-medium font-heading text-foreground mt-6">
-              Plug what you{" "}
+              Everything your onboarding {" "}
               <span className="bg-linear-to-r from-white to-blue-500 bg-clip-text text-transparent">
-                need
+                needs
               </span>
+              . And more
             </h2>
             <p className="text-sm md:text-xl mt-4 text-center text-accent-foreground max-w-lg">
               Use the full suite or just the pieces you want. One script tag, done.

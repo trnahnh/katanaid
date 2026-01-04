@@ -9,7 +9,7 @@ interface GridBackgroundProps {
 
 const GridBackground = ({
   gridSize = 40,
-  glowRadius = 200,
+  glowRadius = 150,
   glowIntensity = 0.3,
   glowColor = "#a855f7",
 }: GridBackgroundProps) => {
@@ -64,7 +64,7 @@ const GridBackground = ({
           const dy = mouseY - y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          let opacity = 0.08;
+          let opacity = 0.03;
           let lineWidth = 1;
 
           if (distance < glowRadius) {
