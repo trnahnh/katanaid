@@ -127,10 +127,10 @@ const LandingPage = () => {
           <LampContainer>
             <div className="flex flex-col items-center justify-center relative w-full text-center max-w-3xl">
               <h2 className="text-3xl md:text-5xl pt-7 bg-clip-text text-center leading-tight font-medium font-heading tracking-tight">
-                Ready to ship?
+                Start now, no strings attached
               </h2>
               <p className="text-sm md:text-xl text-accent-foreground mt-4 max-w-md mx-auto">
-                Grab your API key and integrate in minutes. Free forever for most apps.
+                Grab your API key and integrate in minutes. Free up to your first 10,000 monthly active users.
               </p>
               <div className="mt-6">
                 <Button>
