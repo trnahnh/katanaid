@@ -27,7 +27,7 @@ const LandingPage = () => {
         </h1>
         <div className="text-center mt-6 text-accent-foreground">
           <p className="text-sm md:text-xl max-w-xl">
-            Authentication, avatars, usernames, spam protection <br />
+            Authentication, user identity, spam protection <br />
             Katana gives you{" "}
             <span className="bg-linear-to-r from-blue-500 to-white bg-clip-text text-transparent">
               one Toolkit
@@ -101,14 +101,14 @@ const LandingPage = () => {
           <div className="flex flex-col w-full items-center justify-center py-8">
             <MagicBadge title="Features" />
             <h2 className="text-center text-3xl md:text-5xl leading-tight font-medium font-heading text-foreground mt-6">
-              Everything your onboarding {" "}
+              Everything your onboar
               <span className="bg-linear-to-r from-white to-blue-500 bg-clip-text text-transparent">
-                needs
+                ding needs
               </span>
-              . And more
+              .
             </h2>
             <p className="text-sm md:text-xl mt-4 text-center text-accent-foreground max-w-lg">
-              Use the full suite or just the pieces you want. One script tag, done.
+              Sessions, tokens, Social sign in, multifactor authentication handled. Drop-in components that make auth seamless and efortless.
             </p>
           </div>
         </AnimationContainer>

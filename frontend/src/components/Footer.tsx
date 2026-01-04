@@ -14,11 +14,8 @@ const Footer = () => {
                         <div className="flex items-start">
                             <Logo />
                         </div>
-                        <p className="text-muted-foreground mt-4 text-sm text-start">
-                            Auth, avatars, usernames, bot protection. Use what you need.
-                        </p>
                         <p className="mt-4 text-foreground/80 text-sm">
-                            Made by <a href="https://github.com/trnahnh" className="font-semibold hover:underline">Anh Tran</a> & <a href="https://github.com/suka712" className="font-semibold hover:underline">Khiem Nguyen</a>
+                            KatanaID by <a href="https://github.com/trnahnh" className="font-semibold hover:underline">Anh Tran</a> & <a href="https://github.com/suka712" className="font-semibold hover:underline">Khiem Nguyen</a>
                         </p>
                     </div>
                 </AnimationContainer>
