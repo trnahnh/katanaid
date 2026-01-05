@@ -2,6 +2,9 @@ package handlers
 
 import (
 	"context"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"log"
@@ -15,6 +18,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -95,7 +99,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Generating token
+	// Generate JWT
 	tokenString, err := generateSignedToken(userID, username, email)
 	if err != nil {
 		log.Print("Error generating token for signup:", err)
@@ -103,7 +107,28 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Log successful signup
+	// Generate email verification
+	rawEmailToken, hashedEmailToken, err := generateEmailVerificationToken()
+	if err != nil {
+		log.Print("Error generating token for email verification:", err)
+		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		return
+	}
+
+	err = sendVerificationEmail(rawEmailToken)
+	if err != nil {
+		log.Print("Error generating token for email verification:", err)
+		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		return
+	}
+
+	err = storeVerification(context.Background(), database.DB, hashedEmailToken, userID, time.Now().Add(24*time.Hour))
+	if err != nil {
+		log.Print("Error storing email verification:", err)
+		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		return
+	}
+
 	log.Printf("New user signed up: %s - %s", username, email)
 
 	writeJSON(w, http.StatusCreated, AuthSuccessResponse{
@@ -193,4 +218,90 @@ var emailRegex = regexp.MustCompile(`^[^\s@]+@[^\s@]+\.[^\s@]+$`)
 
 func isValidEmail(email string) bool {
 	return emailRegex.MatchString(email)
+}
+
+func generateEmailVerificationToken() (raw string, hashed string, err error) {
+	b := make([]byte, 64)
+	if _, err := rand.Read(b); err != nil {
+		return "", "", err
+	}
+	raw = hex.EncodeToString(b)
+
+	h := sha256.Sum256([]byte(raw))
+	hashed = hex.EncodeToString(h[:])
+
+	return raw, hashed, nil
+}
+
+func storeVerification(
+	ctx context.Context,
+	db *pgxpool.Pool,
+	hashedToken string,
+	userID int, expiresAt time.Time) error {
+	_, err := db.Exec(ctx,
+		`INSERT INTO email_verifications (user_id, token_hash, expires_at) VALUES ($1, $2, $3)`,
+		userID, hashedToken, expiresAt,
+	)
+	return err
+}
+
+func findVerification(
+	ctx context.Context,
+	db *pgxpool.Pool,
+	hashedToken string) (userID int, expiresAt time.Time, err error) {
+	err = db.QueryRow(ctx,
+		`SELECT user_id, expires_at FROM email_verifications WHERE token_hash = $1`,
+		hashedToken,
+	).Scan(&userID, &expiresAt)
+	return
+}
+
+func deleteVerification(ctx context.Context, db *pgxpool.Pool, hashedToken string) error {
+	_, err := db.Exec(ctx,
+		`DELETE FROM email_verifications WHERE token_hash = $1`, hashedToken)
+	return err
+}
+
+func verifyToken(ctx context.Context, db *pgxpool.Pool, incomingToken string) error {
+	h := sha256.Sum256([]byte(incomingToken))
+	hashedToken := hex.EncodeToString(h[:])
+
+	userID, expiresAt, err := findVerification(ctx, db, hashedToken)
+	if err != nil {
+		return errors.New("invalid token")
+	}
+
+	if time.Now().After(expiresAt) {
+		_ = deleteVerification(ctx, db, hashedToken)
+		return errors.New("token expired")
+	}
+
+	_, err = db.Exec(ctx, `UPDATE users SET email_verified = TRUE WHERE id = $1`, userID)
+	if err != nil {
+		return errors.New("failed to verify user")
+	}
+
+	_ = deleteVerification(ctx, db, hashedToken)
+	return nil
+}
+
+func verifyEmail(w http.ResponseWriter, r *http.Request) {
+	token := r.URL.Query().Get("token")
+	if token == "" {
+		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Missing authentication token"})
+		return
+	}
+
+	err := verifyToken(r.Context(), database.DB, token)
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Something went wrong"})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]string{"message": "Email verified"})
+}
+
+func sendVerificationEmail(string) error {
+	// TODO: send verification token
+	return nil
 }
