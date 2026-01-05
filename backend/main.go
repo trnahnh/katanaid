@@ -79,6 +79,7 @@ func main() {
 		r.Use(middleware.AuthRateLimiter())
 		r.Post("/signup", handlers.Signup)
 		r.Post("/login", handlers.Login)
+		r.Get("/verify-email", handlers.VerifyEmail)
 	})
 
 	// Contact endpoint

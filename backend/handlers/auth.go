@@ -294,14 +294,15 @@ func VerifyEmail(w http.ResponseWriter, r *http.Request) {
 
 	err := verifyToken(r.Context(), database.DB, token)
 	if err != nil {
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Something went wrong"})
+		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Invalid token"})
 		return
 	}
 
 	writeJSON(w, http.StatusOK, map[string]string{"message": "Email verified"})
 }
 
-func sendVerificationEmail(string) error {
+func sendVerificationEmail(token string) error {
+	log.Printf("DEBUG: verification token: %s", token)
 	// TODO: send verification token
 	return nil
 }
