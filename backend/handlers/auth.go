@@ -285,7 +285,7 @@ func verifyToken(ctx context.Context, db *pgxpool.Pool, incomingToken string) er
 	return nil
 }
 
-func verifyEmail(w http.ResponseWriter, r *http.Request) {
+func VerifyEmail(w http.ResponseWriter, r *http.Request) {
 	token := r.URL.Query().Get("token")
 	if token == "" {
 		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Missing authentication token"})
