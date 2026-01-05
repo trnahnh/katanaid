@@ -27,7 +27,7 @@ const LandingPage = () => {
         </h1>
         <div className="text-center mt-6 text-accent-foreground">
           <p className="text-sm md:text-xl max-w-xl">
-            Authentication, user identity, spam protection <br />
+            Authentication, user identity, spam protection. <br />
             Katana gives you{" "}
             <span className="bg-linear-to-r from-blue-500 to-white bg-clip-text text-transparent">
               one Toolkit
@@ -108,7 +108,7 @@ const LandingPage = () => {
               .
             </h2>
             <p className="text-sm md:text-xl mt-4 text-center text-accent-foreground max-w-lg">
-              Sessions, tokens, Social sign in, multifactor authentication handled. Drop-in components that make auth seamless and efortless.
+              Sessions, tokens, Social sign in, multifactor authentication handled. Drop-in components that make auth seamless and effortless.
             </p>
           </div>
         </AnimationContainer>
@@ -127,7 +127,7 @@ const LandingPage = () => {
           <LampContainer>
             <div className="flex flex-col items-center justify-center relative w-full text-center max-w-3xl">
               <h2 className="text-3xl md:text-5xl pt-7 bg-clip-text text-center leading-tight font-medium font-heading tracking-tight">
-                Start now, no strings attached
+                Start now, no strings attached.
               </h2>
               <p className="text-sm md:text-xl text-accent-foreground mt-4 max-w-md mx-auto">
                 Grab your API key and integrate in minutes. Free up to your first 10,000 monthly active users.
