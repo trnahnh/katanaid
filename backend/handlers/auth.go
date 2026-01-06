@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -19,6 +20,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/resend/resend-go/v2"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -115,9 +117,9 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = sendVerificationEmail(rawEmailToken)
+	err = sendVerificationEmail(rawEmailToken, email)
 	if err != nil {
-		log.Print("Error generating token for email verification:", err)
+		log.Print("Error sending verification email:", err)
 		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
 		return
 	}
@@ -301,8 +303,24 @@ func verifyToken(ctx context.Context, db *pgxpool.Pool, incomingToken string) er
 	return nil
 }
 
-func sendVerificationEmail(token string) error {
+func sendVerificationEmail(token string, email string) error {
 	log.Printf("DEBUG: verification token: %s", token)
-	// TODO: send verification token
+
+	client := resend.NewClient(os.Getenv("RESEND_API_KEY"))
+
+	link := fmt.Sprintf("%s/verify-email?token=%s", os.Getenv("BACKEND_URL"), token)
+
+	params := &resend.SendEmailRequest{
+		From:    "onboarding@resend.dev",
+		To:      []string{email},
+		Subject: "KatanaID Email Verification",
+		Html:    fmt.Sprintf(`<p>Click the link below to verify your email</p><a href="%s">Verify Email</a>`, link),
+	}
+
+	_, err := client.Emails.Send(params)
+	if err != nil {
+		return errors.New("failed to send email")
+	}
+
 	return nil
 }
