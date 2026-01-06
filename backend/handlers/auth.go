@@ -3,13 +3,13 @@ package handlers
 import (
 	"context"
 	"crypto/rand"
-	mrand "math/rand"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
+	mrand "math/rand"
 	"net/http"
 	"os"
 	"regexp"
@@ -248,6 +248,7 @@ func generateSignedToken(userID int, username, email string) (string, error) {
 }
 
 var emailRegex = regexp.MustCompile(`^[^\s@]+@[^\s@]+\.[^\s@]+$`)
+
 func isValidEmail(email string) bool {
 	return emailRegex.MatchString(email)
 }
@@ -328,7 +329,7 @@ func sendVerificationEmail(token string, email string, username string) error {
 		From:    "KatanaID <noreply@katanaid.com>",
 		To:      []string{email},
 		Subject: "KatanaID Email Verification",
-		Html:    fmt.Sprintf(`
+		Html: fmt.Sprintf(`
 		<p>Hello, %s</p>
 		<br>
 		<p>This is %s from KatanaID</p>
