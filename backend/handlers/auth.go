@@ -73,10 +73,20 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Insert user into database and get the new user ID
+	// Begin transaction
+	ctx := context.Background()
+	tx, err := database.DB.Begin(ctx)
+	if err != nil {
+		log.Print("Error starting transaction:", err)
+		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		return
+	}
+	defer tx.Rollback(ctx)
+
+	// Insert user into database
 	var userID int
-	err = database.DB.QueryRow(
-		context.Background(),
+	err = tx.QueryRow(
+		ctx,
 		"INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING id",
 		username,
 		email,
@@ -117,6 +127,17 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	_, err = tx.Exec(ctx,
+		`INSERT INTO email_verifications (user_id, token_hash, expires_at) VALUES ($1, $2, $3)`,
+		userID, hashedEmailToken, time.Now().Add(24*time.Hour),
+	)
+	if err != nil {
+		log.Print("Error storing email verification:", err)
+		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		return
+	}
+
+	// Send verification email
 	err = sendVerificationEmail(rawEmailToken, email)
 	if err != nil {
 		log.Print("Error sending verification email:", err)
@@ -124,9 +145,10 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = storeVerification(context.Background(), database.DB, hashedEmailToken, userID, time.Now().Add(24*time.Hour))
+	// Commit transaction
+	err = tx.Commit(ctx)
 	if err != nil {
-		log.Print("Error storing email verification:", err)
+		log.Print("Error committing transaction:", err)
 		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
 		return
 	}
@@ -304,14 +326,12 @@ func verifyToken(ctx context.Context, db *pgxpool.Pool, incomingToken string) er
 }
 
 func sendVerificationEmail(token string, email string) error {
-	log.Printf("DEBUG: verification token: %s", token)
-
 	client := resend.NewClient(os.Getenv("RESEND_API_KEY"))
 
-	link := fmt.Sprintf("%s/verify-email?token=%s", os.Getenv("BACKEND_URL"), token)
+	link := fmt.Sprintf("%s/auth/verify-email?token=%s", os.Getenv("BACKEND_URL"), token)
 
 	params := &resend.SendEmailRequest{
-		From:    "onboarding@resend.dev",
+		From:    "KatanaID <noreply@katanaid.com>",
 		To:      []string{email},
 		Subject: "KatanaID Email Verification",
 		Html:    fmt.Sprintf(`<p>Click the link below to verify your email</p><a href="%s">Verify Email</a>`, link),
@@ -319,7 +339,7 @@ func sendVerificationEmail(token string, email string) error {
 
 	_, err := client.Emails.Send(params)
 	if err != nil {
-		return errors.New("failed to send email")
+		return err
 	}
 
 	return nil
