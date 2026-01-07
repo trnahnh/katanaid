@@ -3,7 +3,6 @@ import {
   IconBook,
   IconChartBar,
   IconFingerprint,
-  IconHelp,
   IconSettings,
 } from "@tabler/icons-react";
 import { Link, useLocation } from "react-router-dom";
