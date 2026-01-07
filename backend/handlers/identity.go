@@ -50,7 +50,7 @@ func GenerateUsername(w http.ResponseWriter, r *http.Request) {
 
 	result, err := client.Models.GenerateContent(
 		ctx,
-		"gemini-2.0-flash",
+		"gemini-2.5-flash-lite",
 		genai.Text(fmt.Sprintf(
 			"Generate exactly %d unique usernames with a %s vibe. Output only the usernames separated by commas, no additional text, no spaces after commas, no numbering.",
 			count,
@@ -59,7 +59,9 @@ func GenerateUsername(w http.ResponseWriter, r *http.Request) {
 		nil,
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("Error generating username:", err)
+		writeJSON(w, http.StatusServiceUnavailable, ErrorResponse{Error: "Username generation quota exceeded"})
+		return
 	}
 
 	writeJSON(w, http.StatusOK, UsernameGenerationSuccessResponse{Usernames: result.Text()})
