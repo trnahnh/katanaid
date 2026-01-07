@@ -3,7 +3,7 @@ const GenerativeIdentityPage = () => {
     <>
       <h1 className="text-2xl font-bold">Generative Identity</h1>
       <p className="text-muted-foreground">
-        Manage your generative identity services here.
+        In case you can't think of a username, let AI do it for you.
       </p>
     </>
   );
