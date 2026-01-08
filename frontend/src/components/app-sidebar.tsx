@@ -5,7 +5,7 @@ import {
   IconFingerprint,
   IconSettings,
 } from "@tabler/icons-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
@@ -24,6 +24,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Logo from "./Logo";
+import { Button } from "./ui/button";
 
 const data = {
   user: {
@@ -60,13 +61,14 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const location = useLocation();
+  const navigate = useNavigate()
 
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="flex items-center gap-3 h-10">
+            <div className="flex items-center gap-3 h-10" onClick={() => navigate("/dashboard")}>
               <Logo />
               {state === "expanded" && <span>KatanaID</span>}
             </div>
