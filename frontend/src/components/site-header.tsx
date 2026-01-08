@@ -5,7 +5,7 @@ import { LucideSearch } from "lucide-react";
 
 export function SiteHeader() {
   return (
-    <header className="flex h-15 shrink-0 items-center gap-2 border-b transition-[width,height]">
+    <header className="relative z-10 flex h-15 shrink-0 items-center gap-2 border-b transition-[width,height]">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1" />
         <Input id="search" type="text" placeholder="Search" className="w-80"/>
