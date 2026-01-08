@@ -36,8 +36,8 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	username := strings.ToLower(strings.TrimSpace(req.Username)) // Normalize. No duplicate
-	email := strings.ToLower(strings.TrimSpace(req.Email))       // Normalize. No duplicate
+	username := strings.TrimSpace(req.Username)
+	email := strings.ToLower(strings.TrimSpace(req.Email)) // Normalize. No duplicate
 	password := strings.TrimSpace(req.Password)
 
 	if username == "" || email == "" || password == "" {
@@ -49,6 +49,10 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	if len(username) < 3 {
 		log.Print("Username length less than 3")
 		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Username must be at least 3 characters"})
+		return
+	} else if len(username) > 60 {
+		log.Print("Username length exceeded 60")
+		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Username cannot exceed 60 characters"})
 		return
 	}
 
@@ -71,7 +75,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Begin transaction, if failed, roll back from here
+	// Begin transaction, Signup rollback point
 	ctx := r.Context()
 	tx, err := database.DB.Begin(ctx)
 	if err != nil {
@@ -94,8 +98,6 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		var pgErr *pgconn.PgError
 		if errors.As(err, &pgErr) && pgErr.Code == "23505" {
 			switch pgErr.ConstraintName {
-			case "users_username_key":
-				writeJSON(w, http.StatusConflict, ErrorResponse{Error: "Username already taken"})
 			case "users_email_key":
 				writeJSON(w, http.StatusConflict, ErrorResponse{Error: "Email already registered"})
 			default:
