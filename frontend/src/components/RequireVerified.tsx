@@ -16,10 +16,8 @@ export default function RequireVerified({ children }: RequireVerifiedProps) {
   // Unverified - show overlay
   if (!authUser.email_verified) {
     return (
-      <div className="relative">
-        {/* Blurred content behind */}
-        <div className="pointer-events-none blur-in opacity-50">{children}</div>
-        {/* Overlay on top */}
+      <div className="relative min-h-full">
+        <div className="pointer-events-none blur-xl opacity-50">{children}</div>
         <VerificationOverlay email={authUser.email} />
       </div>
     );

@@ -221,12 +221,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Check if this is an OAuth-only account
+	// Notify user if user uses OAuth
 	if strings.HasPrefix(user.PasswordHash, "oauth:") {
 		parts := strings.Split(user.PasswordHash, ":")
 		provider := "OAuth"
 		if len(parts) >= 2 {
-			provider = strings.Title(parts[1]) // "google" -> "Google"
+			provider = strings.Title(parts[1]) // Capitalize Google
 		}
 		log.Printf("OAuth user attempted password login: %s", email)
 		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: fmt.Sprintf("This account uses %s login", provider)})

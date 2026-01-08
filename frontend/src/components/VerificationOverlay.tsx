@@ -15,13 +15,6 @@ interface VerificationOverlayProps {
   email: string;
 }
 
-// j.doe@gmail.com to j***@gmail.com
-function maskEmail(email: string): string {
-  const [local, domain] = email.split("@");
-  if (local.length <= 2) return email;
-  return `${local[0]}***@${domain}`;
-}
-
 export default function VerificationOverlay({
   email,
 }: VerificationOverlayProps) {
@@ -40,15 +33,15 @@ export default function VerificationOverlay({
   };
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center z-50 top-50">
+    <div className="absolute inset-0 flex items-center justify-center -top-60">
       <Card className="w-full max-w-md mx-4">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
             <Mail className="h-6 w-6" />
           </div>
-          <CardTitle>Verify Your Email</CardTitle>
+          <CardTitle>Verify your email to continue</CardTitle>
           <CardDescription>
-            We sent a verification link to {maskEmail(email)}
+            We sent a verification link to {email}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex justify-center">
