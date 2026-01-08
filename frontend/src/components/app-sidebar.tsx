@@ -24,7 +24,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Logo from "./Logo";
-import { Button } from "./ui/button";
 
 const data = {
   user: {
