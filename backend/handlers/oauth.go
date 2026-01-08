@@ -492,7 +492,7 @@ func findOrCreateOAuthUser(email, name, provider string, emailVerified bool) (st
 	}
 
 	// Generate JWT token
-	return generateJWT(userID, username, email)
+	return generateSignedToken(userID, username, email)
 }
 
 // sanitizeUsername removes invalid characters from username
@@ -512,24 +512,6 @@ func sanitizeUsername(username string) string {
 	}
 
 	return sanitized
-}
-
-// generateJWT creates a signed JWT token
-func generateJWT(userID int, username, email string) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id":  userID,
-		"username": username,
-		"email":    email,
-		"exp":      time.Now().Add(24 * time.Hour).Unix(),
-		"iat":      time.Now().Unix(),
-	})
-
-	signedToken, err := token.SignedString(jwtSecret)
-	if err != nil {
-		return "", fmt.Errorf("%w: %v", ErrJWTGeneration, err)
-	}
-
-	return signedToken, nil
 }
 
 // redirectWithError redirects to frontend with error message
