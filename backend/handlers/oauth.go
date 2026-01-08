@@ -455,26 +455,10 @@ func findOrCreateOAuthUser(email, name, provider string, emailVerified bool) (st
 
 	if err != nil {
 		// User doesn't exist, create new one
-		baseUsername := sanitizeUsername(strings.Split(email, "@")[0])
-		username = baseUsername
-
-		// Find unique username within transaction
-		for i := 1; i <= 100; i++ {
-			var exists bool
-			err = tx.QueryRow(ctx,
-				"SELECT EXISTS(SELECT 1 FROM users WHERE username = $1)",
-				username,
-			).Scan(&exists)
-
-			if err != nil {
-				return "", fmt.Errorf("%w: %v", ErrDatabaseError, err)
-			}
-
-			if !exists {
-				break
-			}
-
-			username = fmt.Sprintf("%s%d", baseUsername, i)
+		// Use OAuth name as username, fallback to email prefix
+		username = sanitizeUsername(name)
+		if username == "" {
+			username = sanitizeUsername(strings.Split(email, "@")[0])
 		}
 
 		// Generate secure random token for OAuth users (not a password)
@@ -484,16 +468,13 @@ func findOrCreateOAuthUser(email, name, provider string, emailVerified bool) (st
 		}
 		oauthToken := base64.StdEncoding.EncodeToString(randomBytes)
 
-		// Insert new user (adjust columns based on your schema)
-		// If you have a 'display_name' or 'name' column, add it to the query
 		err = tx.QueryRow(ctx,
-			`INSERT INTO users (username, email, password_hash, name) 
-			 VALUES ($1, $2, $3, $4) 
+			`INSERT INTO users (username, email, password_hash)
+			 VALUES ($1, $2, $3)
 			 RETURNING id`,
 			username,
 			email,
 			"oauth:"+provider+":"+oauthToken,
-			name,
 		).Scan(&userID)
 
 		if err != nil {
