@@ -41,6 +41,7 @@ func main() {
 		"FRONTEND_URL",
 		"BACKEND_URL",
 		"DEV_ENVIRONMENT",
+		"GOOGLE_API_KEY",
 	}
 
 	for _, env := range requiredEnvs {
