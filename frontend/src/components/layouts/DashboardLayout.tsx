@@ -13,7 +13,7 @@ const DashboardLayout = () => {
 
   return (
     <SidebarProvider
-      defaultOpen={false}
+      defaultOpen={true}
       style={
         {
           "--sidebar-width": "calc(var(--spacing) * 72)",
