@@ -100,19 +100,20 @@ func main() {
 	})
 
 	r.With(middleware.RateLimiterPerHour(3)).Post("/api/contact", handlers.Contact)
-	
+
 	r.Get("/auth/google", handlers.GoogleLogin)
 	r.Get("/auth/google/callback", handlers.GoogleCallback)
 	r.Get("/auth/github", handlers.GitHubLogin)
 	r.Get("/auth/github/callback", handlers.GitHubCallback)
-	
+
 	r.Route("/api", func(r chi.Router) {
 		r.Use(middleware.RateLimiterPerHour(3))
 		r.Post("/identity/username", handlers.GenerateUsername)
+		r.Post("/identity/avatar", handlers.GenerateAvatar)
 	})
 
 	port := os.Getenv("PORT")
 	fmt.Println("Server is starting on port", port)
 
-	log.Fatal(http.ListenAndServe(":"+port, r))	
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }

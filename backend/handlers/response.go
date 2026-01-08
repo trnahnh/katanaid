@@ -53,3 +53,12 @@ type UsernameGenerationSuccessResponse struct {
 type ErrorResponse struct {
 	Error string `json:"error"`
 }
+
+type AvatarGenerationRequest struct {
+	Style  string `json:"style"`
+	Traits string `json:"traits"`
+}
+
+type AvatarGenerationSuccessResponse struct {
+	Image string `json:"image"`
+}

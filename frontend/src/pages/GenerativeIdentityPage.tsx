@@ -26,11 +26,33 @@ const VIBE_OPTIONS = [
   { value: "quirky", label: "Quirky" },
 ] as const;
 
+const STYLE_OPTIONS = [
+  { value: "realistic", label: "Realistic" },
+  { value: "anime", label: "Anime" },
+  { value: "cartoon", label: "Cartoon" },
+  { value: "pixel", label: "Pixel Art" },
+  { value: "watercolor", label: "Watercolor" },
+  { value: "minimalist", label: "Minimalist" },
+] as const;
+
+const TRAIT_OPTIONS = {
+  hair: ["Short", "Long", "Curly", "Wavy", "Bald"],
+  expression: ["Smiling", "Serious", "Mysterious", "Friendly", "Confident"],
+  background: ["Solid color", "Nature", "Abstract", "Gradient", "None"],
+} as const;
+
 const GenerativeIdentityPage = () => {
-  const [selectedVibe, setSelectedVibe] = useState("anything");
+  const [selectedVibe, setSelectedVibe] = useState("random");
   const [count, setCount] = useState("5");
   const [usernames, setUsernames] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [selectedStyle, setSelectedStyle] = useState("anime");
+  const [selectedHair, setSelectedHair] = useState("Short");
+  const [selectedExpression, setSelectedExpression] = useState("Friendly");
+  const [selectedBackground, setSelectedBackground] = useState("Solid color");
+  const [avatarImage, setAvatarImage] = useState<string | null>(null);
+  const [isGeneratingAvatar, setIsGeneratingAvatar] = useState(false);
 
   const handleGenerate = async () => {
     setIsLoading(true);
@@ -62,6 +84,36 @@ const GenerativeIdentityPage = () => {
   const copyAllUsernames = () => {
     navigator.clipboard.writeText(usernames.join("\n"));
     toast.success("All usernames copied!");
+  };
+
+  const handleGenerateAvatar = async () => {
+    setIsGeneratingAvatar(true);
+    try {
+      const traits = `${selectedHair} hair, ${selectedExpression} expression, ${selectedBackground} background`;
+      
+      const response = await axiosInstance.post("/api/identity/avatar", {
+        style: selectedStyle,
+        traits: traits,
+      });
+  
+      setAvatarImage(response.data.image);
+    } catch (error) {
+      toast.error("Failed to generate avatar");
+    } finally {
+      setIsGeneratingAvatar(false);
+    }
+  };
+  
+  const downloadAvatar = () => {
+    if (!avatarImage) return;
+    
+    const link = document.createElement("a");
+    link.href = `data:image/png;base64,${avatarImage}`;
+    link.download = "avatar.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Avatar downloaded!");
   };
 
   return (
@@ -138,6 +190,114 @@ const GenerativeIdentityPage = () => {
                     <span className="font-mono text-sm">{username}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Avatar Generator Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Avatar Generator</CardTitle>
+          <CardDescription>
+            Select a style and traits to generate your profile picture.
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent className="space-y-4">
+          {/* Style and Trait Selects */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Style Select */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Style</label>
+              <Select value={selectedStyle} onValueChange={setSelectedStyle}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select style" />
+                </SelectTrigger>
+                <SelectContent>
+                  {STYLE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Hair Select */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Hair</label>
+              <Select value={selectedHair} onValueChange={setSelectedHair}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select hair" />
+                </SelectTrigger>
+                <SelectContent>
+                  {TRAIT_OPTIONS.hair.map((option) => (
+                    <SelectItem key={option} value={option}>
+                      {option}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Expression Select */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Expression</label>
+              <Select value={selectedExpression} onValueChange={setSelectedExpression}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select expression" />
+                </SelectTrigger>
+                <SelectContent>
+                  {TRAIT_OPTIONS.expression.map((option) => (
+                    <SelectItem key={option} value={option}>
+                      {option}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Background Select */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Background</label>
+              <Select value={selectedBackground} onValueChange={setSelectedBackground}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select background" />
+                </SelectTrigger>
+                <SelectContent>
+                  {TRAIT_OPTIONS.background.map((option) => (
+                    <SelectItem key={option} value={option}>
+                      {option}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Generate Button */}
+          <Button onClick={handleGenerateAvatar} disabled={isGeneratingAvatar}>
+            {isGeneratingAvatar ? "Generating..." : "Generate Avatar"}
+          </Button>
+
+          {/* Avatar Preview */}
+          {avatarImage && (
+            <div className="space-y-3 pt-4 border-t">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Generated Avatar</span>
+                <Button variant="outline" size="sm" onClick={downloadAvatar}>
+                  Download
+                </Button>
+              </div>
+              
+              <div className="flex justify-center">
+                <img
+                  src={`data:image/png;base64,${avatarImage}`}
+                  alt="Generated avatar"
+                  className="w-48 h-48 rounded-lg border object-cover"
+                />
               </div>
             </div>
           )}
