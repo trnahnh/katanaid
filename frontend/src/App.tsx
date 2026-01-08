@@ -10,6 +10,7 @@ import TrafficAnalyticsPage from "./pages/TrafficAnalyticsPage";
 import TokenCallbackPage from "./pages/AuthCallbackPage";
 import GridBackground from "./components/GridBackground";
 import DashboardLayout from "./components/layouts/DashboardLayout";
+import RequireVerified from "./components/RequireVerified";
 
 const PublicLayout = () => (
   <>
@@ -39,8 +40,22 @@ function App() {
         <Route path="/auth/verified" element={<TokenCallbackPage />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardPage />} />
-          <Route path="generative-identity" element={<GenerativeIdentityPage />} />
-          <Route path="traffic-analytics" element={<TrafficAnalyticsPage />} />
+          <Route
+            path="generative-identity"
+            element={
+              <RequireVerified>
+                <GenerativeIdentityPage />
+              </RequireVerified>
+            }
+          />
+          <Route
+            path="traffic-analytics"
+            element={
+              <RequireVerified>
+                <TrafficAnalyticsPage />
+              </RequireVerified>
+            }
+          />
         </Route>
       </Routes>
     </>

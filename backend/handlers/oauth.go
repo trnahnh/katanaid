@@ -491,7 +491,7 @@ func findOrCreateOAuthUser(email, name, provider string, emailVerified bool) (st
 	}
 
 	// Generate JWT token
-	return generateSignedToken(userID, username, email)
+	return generateSignedToken(userID, username, email, true)
 }
 
 // sanitizeUsername removes invalid characters from username

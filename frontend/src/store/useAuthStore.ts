@@ -9,7 +9,7 @@ interface JWTPayload {
   user_id: number;
   username: string;
   email: string;
-  email_verfied: boolean;
+  email_verified: boolean;
   exp: number;
   iat: number;
 }
@@ -51,7 +51,7 @@ export const useAuthStore = create<AuthStore>()(
             authUser: {
               username: decoded.username,
               email: decoded.email,
-              email_verified: decoded.email_verfied,
+              email_verified: decoded.email_verified,
             },
           });
           toast.success("Logged in successfully.");
