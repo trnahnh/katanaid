@@ -89,7 +89,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   >
                     <Link to={service.url}>
                       <service.icon />
-                      <span>{service.title}</span>
+                      <span className="group-data-[collapsible=icon]:hidden">{service.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
