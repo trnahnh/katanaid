@@ -18,7 +18,7 @@ A plug-and-play identity toolkit for developers. Auth, avatars, usernames, bot p
 - [ ] Interface to send contact info via "Contact" - Rate limit as well
 
 ### Documentation
-- [ ] Contribution guide + `/docs/contribution` endpoint
+- [X] Contribution guide + `/docs/contribution` endpoint
 
 ### Chores
 - [ ] Find replacement for Hero Image bento
