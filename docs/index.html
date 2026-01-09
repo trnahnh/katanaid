@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KatanaID Documentation</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+            <polyline points="14,2 14,8 20,8"></polyline>
+          </svg>
+          <span>KatanaID Docs</span>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <h4 class="nav-section-title">Getting Started</h4>
+          <ul class="nav-list">
+            <li><a href="#introduction" class="nav-link active">Introduction</a></li>
+            <li><a href="#installation" class="nav-link">Installation</a></li>
+            <li><a href="#quickstart" class="nav-link">Quick Start</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <h4 class="nav-section-title">Core Concepts</h4>
+          <ul class="nav-list">
+            <li><a href="#authentication" class="nav-link">Authentication</a></li>
+            <li><a href="#identity" class="nav-link">Identity Management</a></li>
+            <li><a href="#sessions" class="nav-link">Sessions</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <h4 class="nav-section-title">API Reference</h4>
+          <ul class="nav-list">
+            <li><a href="#api-overview" class="nav-link">Overview</a></li>
+            <li><a href="#endpoints" class="nav-link">Endpoints</a></li>
+            <li><a href="#errors" class="nav-link">Error Handling</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="content-header">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="header-right">
+          <a href="https://katanaid.com" class="header-link" target="_blank">
+            KatanaID
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        </div>
+      </header>
+
+      <article class="content">
+        <section id="introduction" class="doc-section">
+          <h1>Introduction</h1>
+          <p class="lead">
+            KatanaID is a modern identity management platform designed to simplify authentication and user management for your applications.
+          </p>
+          <p>
+            This documentation will guide you through integrating KatanaID into your projects, from initial setup to advanced features.
+          </p>
+
+          <div class="callout callout-info">
+            <div class="callout-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              Note
+            </div>
+            <p>This documentation is for KatanaID v1.0. For older versions, please refer to the version selector.</p>
+          </div>
+        </section>
+
+        <section id="installation" class="doc-section">
+          <h2>Installation</h2>
+          <p>Install KatanaID using your preferred package manager:</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span>npm</span>
+              <button class="copy-btn" onclick="copyCode(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <pre><code>npm install @katanaid/sdk</code></pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span>yarn</span>
+              <button class="copy-btn" onclick="copyCode(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <pre><code>yarn add @katanaid/sdk</code></pre>
+          </div>
+        </section>
+
+        <section id="quickstart" class="doc-section">
+          <h2>Quick Start</h2>
+          <p>Get started with KatanaID in just a few lines of code:</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span>JavaScript</span>
+              <button class="copy-btn" onclick="copyCode(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <pre><code><span class="token-keyword">import</span> { KatanaID } <span class="token-keyword">from</span> <span class="token-string">'@katanaid/sdk'</span>;
+
+<span class="token-comment">// Initialize the client</span>
+<span class="token-keyword">const</span> katana = <span class="token-keyword">new</span> <span class="token-function">KatanaID</span>({
+  apiKey: <span class="token-string">'your-api-key'</span>,
+  environment: <span class="token-string">'production'</span>
+});
+
+<span class="token-comment">// Authenticate a user</span>
+<span class="token-keyword">const</span> session = <span class="token-keyword">await</span> katana.<span class="token-function">authenticate</span>({
+  email: <span class="token-string">'user@example.com'</span>,
+  password: <span class="token-string">'secure-password'</span>
+});</code></pre>
+          </div>
+        </section>
+
+        <section id="authentication" class="doc-section">
+          <h2>Authentication</h2>
+          <p>
+            KatanaID supports multiple authentication methods to fit your application's needs:
+          </p>
+
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+              <h3>Password Auth</h3>
+              <p>Traditional email and password authentication with secure hashing.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                  <polyline points="10,17 15,12 10,7"></polyline>
+                  <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+              </div>
+              <h3>OAuth / SSO</h3>
+              <p>Integrate with Google, GitHub, and other OAuth providers.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"></path>
+                </svg>
+              </div>
+              <h3>Magic Links</h3>
+              <p>Passwordless authentication via email magic links.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                  <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+              </div>
+              <h3>Passkeys</h3>
+              <p>Modern WebAuthn-based passwordless authentication.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="identity" class="doc-section">
+          <h2>Identity Management</h2>
+          <p>
+            Manage user identities with a comprehensive set of tools for user profiles, roles, and permissions.
+          </p>
+
+          <h3>User Profiles</h3>
+          <p>Access and update user profile information:</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span>JavaScript</span>
+              <button class="copy-btn" onclick="copyCode(this)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <pre><code><span class="token-comment">// Get current user</span>
+<span class="token-keyword">const</span> user = <span class="token-keyword">await</span> katana.<span class="token-function">getCurrentUser</span>();
+
+<span class="token-comment">// Update profile</span>
+<span class="token-keyword">await</span> katana.<span class="token-function">updateUser</span>({
+  name: <span class="token-string">'Jane Doe'</span>,
+  avatar: <span class="token-string">'https://example.com/avatar.jpg'</span>
+});</code></pre>
+          </div>
+        </section>
+
+        <section id="sessions" class="doc-section">
+          <h2>Sessions</h2>
+          <p>
+            KatanaID provides secure session management with automatic token refresh and session invalidation.
+          </p>
+
+          <div class="callout callout-warning">
+            <div class="callout-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              Security Note
+            </div>
+            <p>Always store session tokens securely. Never expose them in client-side code or URLs.</p>
+          </div>
+        </section>
+
+        <section id="api-overview" class="doc-section">
+          <h2>API Overview</h2>
+          <p>
+            The KatanaID API follows REST conventions and returns JSON responses. All API requests require authentication via API key or session token.
+          </p>
+
+          <h3>Base URL</h3>
+          <div class="code-block">
+            <pre><code>https://api.katanaid.com/v1</code></pre>
+          </div>
+        </section>
+
+        <section id="endpoints" class="doc-section">
+          <h2>Endpoints</h2>
+
+          <div class="endpoint">
+            <div class="endpoint-header">
+              <span class="method method-post">POST</span>
+              <code>/auth/login</code>
+            </div>
+            <p>Authenticate a user and create a new session.</p>
+          </div>
+
+          <div class="endpoint">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <code>/users/me</code>
+            </div>
+            <p>Get the current authenticated user's profile.</p>
+          </div>
+
+          <div class="endpoint">
+            <div class="endpoint-header">
+              <span class="method method-patch">PATCH</span>
+              <code>/users/me</code>
+            </div>
+            <p>Update the current user's profile information.</p>
+          </div>
+
+          <div class="endpoint">
+            <div class="endpoint-header">
+              <span class="method method-delete">DELETE</span>
+              <code>/auth/session</code>
+            </div>
+            <p>Invalidate the current session (logout).</p>
+          </div>
+        </section>
+
+        <section id="errors" class="doc-section">
+          <h2>Error Handling</h2>
+          <p>
+            KatanaID uses conventional HTTP response codes to indicate the success or failure of API requests.
+          </p>
+
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>200</code></td>
+                <td>Success - Request completed successfully</td>
+              </tr>
+              <tr>
+                <td><code>400</code></td>
+                <td>Bad Request - Invalid parameters</td>
+              </tr>
+              <tr>
+                <td><code>401</code></td>
+                <td>Unauthorized - Invalid or missing authentication</td>
+              </tr>
+              <tr>
+                <td><code>403</code></td>
+                <td>Forbidden - Insufficient permissions</td>
+              </tr>
+              <tr>
+                <td><code>404</code></td>
+                <td>Not Found - Resource does not exist</td>
+              </tr>
+              <tr>
+                <td><code>500</code></td>
+                <td>Server Error - Something went wrong on our end</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </article>
+
+      <footer class="content-footer">
+        <p>&copy; 2024 KatanaID. All rights reserved.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.toggle('open');
+    });
+
+    // Copy code functionality
+    function copyCode(button) {
+      const codeBlock = button.closest('.code-block').querySelector('code');
+      const text = codeBlock.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        button.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20,6 9,17 4,12"></polyline>
+          </svg>
+          Copied!
+        `;
+        setTimeout(() => {
+          button.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy
+          `;
+        }, 2000);
+      });
+    }
+
+    // Active nav link highlighting
+    const sections = document.querySelectorAll('.doc-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 100) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

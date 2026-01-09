@@ -51,7 +51,7 @@ const data = {
     },
     {
       title: "Documentations",
-      url: "http://docs.katanaid.com/",
+      url: "https://docs.katanaid.com/",
       icon: IconBook,
     },
   ],

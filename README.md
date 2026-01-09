@@ -3,7 +3,7 @@
 AI-integrated authentication toolkit - Open to contribution.
 
 **Checkout the app live:** [katanaid.com](https://katanaid.com)
-**Our documentations:** [docs.katanaid.com](http://docs.katanaid.com)
+**Our documentations:** [docs.katanaid.com](https://docs.katanaid.com)
 
 ## Tech Stack
 

@@ -71,7 +71,7 @@ const NavBar = () => {
             </HoverCardContent>
           </HoverCard>
           <Button variant="ghost" asChild>
-            <a href="http://docs.katanaid.com/">Documentations</a>
+            <a href="https://docs.katanaid.com/">Documentations</a>
           </Button>
           <ContactDialog>
             <Button variant="ghost">Contact</Button>
