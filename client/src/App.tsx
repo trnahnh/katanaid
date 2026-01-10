@@ -12,6 +12,7 @@ import GridBackground from "./components/GridBackground";
 import DashboardLayout from "./components/layouts/DashboardLayout";
 import RequireVerified from "./components/RequireVerified";
 import EmailServicePage from "./pages/service-pages/EmailServicePage";
+import EmailFraudPage from "./pages/service-pages/EmailFraudPage";
 
 const PublicLayout = () => (
   <>
@@ -62,6 +63,14 @@ function App() {
             element={
               <RequireVerified>
                 <EmailServicePage />
+              </RequireVerified>
+            }
+          />
+          <Route
+            path="email-fraud"
+            element={
+              <RequireVerified>
+                <EmailFraudPage />
               </RequireVerified>
             }
           />

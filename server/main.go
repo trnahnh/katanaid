@@ -11,7 +11,8 @@ import (
 	"katanaid/database"
 	"katanaid/handlers"
 	"katanaid/middleware"
-	"katanaid/services/identity-service"
+	identityservice "katanaid/services/identity-service"
+	spamservice "katanaid/services/spam-service"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/joho/godotenv"
@@ -112,6 +113,12 @@ func main() {
 		r.Use(middleware.RateLimiterPerHour(3))
 		r.Post("/identity/username", identityservice.GenerateUsername)
 		r.Post("/identity/avatar", identityservice.GenerateAvatar)
+	})
+
+	r.Route("/api/spam", func(r chi.Router) {
+		r.Use(middleware.RateLimiterPerMinute(30))
+		r.Post("/email-check", spamservice.CheckEmail)
+		r.Post("/email-bulk", spamservice.CheckEmailBulk)
 	})
 
 	port := os.Getenv("PORT")
