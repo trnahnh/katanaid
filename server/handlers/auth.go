@@ -17,6 +17,8 @@ import (
 	"time"
 
 	"katanaid/database"
+	"katanaid/models"
+	"katanaid/util"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -27,12 +29,12 @@ import (
 
 // -----------------------------------Signup-----------------------------------
 func Signup(w http.ResponseWriter, r *http.Request) {
-	var req SignupRequest
+	var req models.SignupRequest
 
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		log.Print("Error decoding JSON:", err)
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
@@ -42,36 +44,36 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 
 	if username == "" || email == "" || password == "" {
 		log.Print("Request has empty field")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Username, email and password required"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Username, email and password required"})
 		return
 	}
 
 	if len(username) < 3 {
 		log.Print("Username length less than 3")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Username must be at least 3 characters"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Username must be at least 3 characters"})
 		return
 	} else if len(username) > 60 {
 		log.Print("Username length exceeded 60")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Username cannot exceed 60 characters"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Username cannot exceed 60 characters"})
 		return
 	}
 
 	if !isValidEmail(email) {
 		log.Print("Invalid email format")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Invalid email"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Invalid email"})
 		return
 	}
 
 	if len(password) < 8 {
 		log.Print("Password length less than 8")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Password must be at least 8 characters"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Password must be at least 8 characters"})
 		return
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		log.Print("Error generating password hash")
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
@@ -80,7 +82,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	tx, err := database.DB.Begin(ctx)
 	if err != nil {
 		log.Print("Error starting transaction:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 	defer tx.Rollback(ctx)
@@ -99,14 +101,14 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		if errors.As(err, &pgErr) && pgErr.Code == "23505" {
 			switch pgErr.ConstraintName {
 			case "users_email_key":
-				writeJSON(w, http.StatusConflict, ErrorResponse{Error: "Email already registered"})
+				util.WriteJSON(w, http.StatusConflict, models.ErrorResponse{Error: "Email already registered"})
 			default:
-				writeJSON(w, http.StatusConflict, ErrorResponse{Error: "Account already registered"})
+				util.WriteJSON(w, http.StatusConflict, models.ErrorResponse{Error: "Account already registered"})
 			}
 			return
 		}
 		log.Print("Error creating account in DB:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
@@ -114,7 +116,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	tokenString, err := generateSignedToken(userID, username, email, false)
 	if err != nil {
 		log.Print("Error generating token for signup:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
@@ -122,7 +124,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	rawEmailToken, hashedEmailToken, err := generateEmailVerificationToken()
 	if err != nil {
 		log.Print("Error generating token for email verification:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
@@ -132,14 +134,14 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	)
 	if err != nil {
 		log.Print("Error storing email verification:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
 	err = sendVerificationEmail(rawEmailToken, email, username)
 	if err != nil {
 		log.Print("Error sending verification email:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
@@ -147,13 +149,13 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	err = tx.Commit(ctx)
 	if err != nil {
 		log.Print("Error committing transaction:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
 	log.Printf("New user signed up: %s - %s", username, email)
 
-	writeJSON(w, http.StatusCreated, AuthSuccessResponse{
+	util.WriteJSON(w, http.StatusCreated, models.AuthSuccessResponse{
 		Token:         tokenString,
 		Username:      username,
 		Email:         email,
@@ -190,12 +192,12 @@ func VerifyEmail(w http.ResponseWriter, r *http.Request) {
 
 // -----------------------------------Login-----------------------------------
 func Login(w http.ResponseWriter, r *http.Request) {
-	var req LoginRequest
+	var req models.LoginRequest
 
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		log.Print("Error decoding JSON:", err)
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
@@ -204,11 +206,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	if email == "" || password == "" {
 		log.Print("Request has empty field")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Email and password required"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Email and password required"})
 		return
 	}
 
-	var user User
+	var user models.User
 	err = database.DB.QueryRow(
 		context.Background(),
 		"SELECT id, username, email, password_hash, email_verified FROM users WHERE email = $1",
@@ -217,7 +219,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Print("Incorrect username or password")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Incorrect username or password"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Incorrect username or password"})
 		return
 	}
 
@@ -229,26 +231,26 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			provider = strings.Title(parts[1]) // Capitalize Google
 		}
 		log.Printf("OAuth user attempted password login: %s", email)
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: fmt.Sprintf("This account uses %s login", provider)})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: fmt.Sprintf("This account uses %s login", provider)})
 		return
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if err != nil {
 		log.Print("Incorrect username or password")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Incorrect username or password"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Incorrect username or password"})
 		return
 	}
 
 	tokenString, err := generateSignedToken(user.ID, user.Username, user.Email, user.EmailVerified)
 	if err != nil {
 		log.Print("Error generating token for login:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Something went wrong"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
 		return
 	}
 
 	log.Printf("User logged in: %s - %s", user.Username, user.Email)
-	writeJSON(w, http.StatusOK, AuthSuccessResponse{
+	util.WriteJSON(w, http.StatusOK, models.AuthSuccessResponse{
 		Token:         tokenString,
 		Username:      user.Username,
 		Email:         user.Email,

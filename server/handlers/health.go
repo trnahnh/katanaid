@@ -3,6 +3,8 @@ package handlers
 import (
 	"net/http"
 	"time"
+
+	"katanaid/util"
 )
 
 // JSON structure returning
@@ -18,5 +20,5 @@ func Health(w http.ResponseWriter, r *http.Request) {
 		Timestamp: time.Now().UTC().Format(time.RFC3339),
 	}
 
-	writeJSON(w, http.StatusOK, response)
+	util.WriteJSON(w, http.StatusOK, response)
 }

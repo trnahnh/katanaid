@@ -9,6 +9,8 @@ import (
 	"strings"
 
 	"katanaid/database"
+	"katanaid/models"
+	"katanaid/util"
 )
 
 // ContactRequest is the expected JSON body
@@ -33,7 +35,7 @@ func Contact(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		log.Print("Error decoding JSON:", err)
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Invalid JSON"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Invalid JSON"})
 		return
 	}
 
@@ -44,25 +46,25 @@ func Contact(w http.ResponseWriter, r *http.Request) {
 	// Validate input
 	if email == "" || reason == "" {
 		log.Print("Missing required fields")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Email and reason are required"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Email and reason are required"})
 		return
 	}
 
 	if !contactEmailRegex.MatchString(email) {
 		log.Print("Invalid email format")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Invalid email format"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Invalid email format"})
 		return
 	}
 
 	if len(reason) < 10 {
 		log.Print("Reason too short")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Please provide more details (at least 10 characters)"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Please provide more details (at least 10 characters)"})
 		return
 	}
 
 	if len(reason) > 2000 {
 		log.Print("Reason too long")
-		writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "Message too long (max 2000 characters)"})
+		util.WriteJSON(w, http.StatusBadRequest, models.ErrorResponse{Error: "Message too long (max 2000 characters)"})
 		return
 	}
 
@@ -76,13 +78,13 @@ func Contact(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Print("Error saving contact:", err)
-		writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: "Failed to submit contact"})
+		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Failed to submit contact"})
 		return
 	}
 
 	log.Printf("New contact submission from: %s", email)
 
-	writeJSON(w, http.StatusCreated, ContactResponse{
+	util.WriteJSON(w, http.StatusCreated, ContactResponse{
 		Message: "Thank you for contacting us! We'll get back to you soon.",
 	})
 }
