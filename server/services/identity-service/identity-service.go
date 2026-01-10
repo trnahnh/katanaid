@@ -1,4 +1,4 @@
-package identityservices
+package identityservice
 
 import (
 	"context"

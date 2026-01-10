@@ -11,7 +11,7 @@ import (
 	"katanaid/database"
 	"katanaid/handlers"
 	"katanaid/middleware"
-	"katanaid/services/identityservices"
+	"katanaid/services/identity-service"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/joho/godotenv"
@@ -110,8 +110,8 @@ func main() {
 
 	r.Route("/api", func(r chi.Router) {
 		r.Use(middleware.RateLimiterPerHour(3))
-		r.Post("/identity/username", identityservices.GenerateUsername)
-		r.Post("/identity/avatar", identityservices.GenerateAvatar)
+		r.Post("/identity/username", identityservice.GenerateUsername)
+		r.Post("/identity/avatar", identityservice.GenerateAvatar)
 	})
 
 	port := os.Getenv("PORT")

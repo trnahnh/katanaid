@@ -1,4 +1,4 @@
-package emailservices
+package emailservice
 
 import (
 	"net/http"
