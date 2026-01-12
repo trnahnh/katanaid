@@ -11,6 +11,7 @@ import (
 	"katanaid/database"
 	"katanaid/handlers"
 	"katanaid/middleware"
+	captchaservice "katanaid/services/captcha-service"
 	identityservice "katanaid/services/identity-service"
 	spamservice "katanaid/services/spam-service"
 
@@ -119,6 +120,12 @@ func main() {
 		r.Use(middleware.RateLimiterPerMinute(30))
 		r.Post("/email-check", spamservice.CheckEmail)
 		r.Post("/email-bulk", spamservice.CheckEmailBulk)
+	})
+
+	r.Route("/api/captcha", func(r chi.Router) {
+		r.Use(middleware.RateLimiterPerMinute(60))
+		r.Post("/create", captchaservice.CreateChallenge)
+		r.Post("/verify", captchaservice.VerifyChallenge)
 	})
 
 	port := os.Getenv("PORT")
