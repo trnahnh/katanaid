@@ -25,9 +25,12 @@ import (
 type ChallengeType string
 
 const (
-	SlashDownLeft  ChallengeType = "slash_down_left"
-	SlashDownRight ChallengeType = "slash_down_right"
-	SlashUp        ChallengeType = "slash_up"
+	SlashDownLeft     ChallengeType = "slash_down_left"     // ↘ Katana slash
+	SlashDownRight    ChallengeType = "slash_down_right"    // ↙ Reverse katana
+	SlashUp           ChallengeType = "slash_up"            // ↑ Rising strike
+	SlashHorizontal   ChallengeType = "slash_horizontal"    // → Horizontal cut
+	SlashDiagonalUp   ChallengeType = "slash_diagonal_up"   // ↗ Upward diagonal
+	SlashVerticalDown ChallengeType = "slash_vertical_down" // ↓ Downward strike
 )
 
 const (
@@ -40,27 +43,90 @@ const (
 	MinGestureDistance = 50.0 // minimum pixel distance for valid gesture
 )
 
-// Challenge configurations
-var challengeConfigs = map[ChallengeType]struct {
+// ChallengeConfig holds the configuration for each challenge type
+type ChallengeConfig struct {
 	ExpectedAngle float64
 	Instruction   string
-}{
-	SlashDownLeft:  {ExpectedAngle: 135, Instruction: "Slash from top-right to bottom-left"},
-	SlashDownRight: {ExpectedAngle: 45, Instruction: "Slash from top-left to bottom-right"},
-	SlashUp:        {ExpectedAngle: -90, Instruction: "Slash upward"},
+	Emoji         string
+	StartX        float64 // Start position as percentage (0-1)
+	StartY        float64
+	EndX          float64 // End position as percentage (0-1)
+	EndY          float64
 }
 
-var challengeTypes = []ChallengeType{SlashDownLeft, SlashDownRight, SlashUp}
+// Challenge configurations with visual hints
+var challengeConfigs = map[ChallengeType]ChallengeConfig{
+	SlashDownLeft: {
+		ExpectedAngle: 135,
+		Instruction:   "Katana slash! Top-right to bottom-left",
+		Emoji:         "⚔️",
+		StartX:        0.85, StartY: 0.15,
+		EndX: 0.15, EndY: 0.85,
+	},
+	SlashDownRight: {
+		ExpectedAngle: 45,
+		Instruction:   "Reverse slash! Top-left to bottom-right",
+		Emoji:         "🗡️",
+		StartX:        0.15, StartY: 0.15,
+		EndX: 0.85, EndY: 0.85,
+	},
+	SlashUp: {
+		ExpectedAngle: -90,
+		Instruction:   "Rising strike! Bottom to top",
+		Emoji:         "⬆️",
+		StartX:        0.5, StartY: 0.85,
+		EndX: 0.5, EndY: 0.15,
+	},
+	SlashHorizontal: {
+		ExpectedAngle: 0,
+		Instruction:   "Horizontal cut! Left to right",
+		Emoji:         "➡️",
+		StartX:        0.15, StartY: 0.5,
+		EndX: 0.85, EndY: 0.5,
+	},
+	SlashDiagonalUp: {
+		ExpectedAngle: -45,
+		Instruction:   "Upward strike! Bottom-left to top-right",
+		Emoji:         "↗️",
+		StartX:        0.15, StartY: 0.85,
+		EndX: 0.85, EndY: 0.15,
+	},
+	SlashVerticalDown: {
+		ExpectedAngle: 90,
+		Instruction:   "Downward strike! Top to bottom",
+		Emoji:         "⬇️",
+		StartX:        0.5, StartY: 0.15,
+		EndX: 0.5, EndY: 0.85,
+	},
+}
+
+var challengeTypes = []ChallengeType{
+	SlashDownLeft,
+	SlashDownRight,
+	SlashUp,
+	SlashHorizontal,
+	SlashDiagonalUp,
+	SlashVerticalDown,
+}
 
 // =============================================================================
 // REQ / RES TYPES
 // =============================================================================
 
 type CreateChallengeResponse struct {
-	SessionID   string `json:"session_id"`
-	Challenge   string `json:"challenge"`
-	Instruction string `json:"instruction"`
-	ExpiresIn   int    `json:"expires_in"`
+	SessionID   string     `json:"session_id"`
+	Challenge   string     `json:"challenge"`
+	Instruction string     `json:"instruction"`
+	Emoji       string     `json:"emoji"`
+	Hint        HintConfig `json:"hint"`
+	ExpiresIn   int        `json:"expires_in"`
+}
+
+type HintConfig struct {
+	StartX float64 `json:"start_x"`
+	StartY float64 `json:"start_y"`
+	EndX   float64 `json:"end_x"`
+	EndY   float64 `json:"end_y"`
 }
 
 type VerifyRequest struct {
@@ -114,7 +180,14 @@ func CreateChallenge(w http.ResponseWriter, r *http.Request) {
 		SessionID:   sessionID,
 		Challenge:   string(challengeType),
 		Instruction: config.Instruction,
-		ExpiresIn:   int(SessionExpiry.Seconds()),
+		Emoji:       config.Emoji,
+		Hint: HintConfig{
+			StartX: config.StartX,
+			StartY: config.StartY,
+			EndX:   config.EndX,
+			EndY:   config.EndY,
+		},
+		ExpiresIn: int(SessionExpiry.Seconds()),
 	})
 }
 
