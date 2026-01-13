@@ -12,6 +12,7 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { NavSecondary } from "@/components/nav-secondary";
+import { useAuthStore } from "@/store/useAuthStore";
 import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
@@ -31,11 +32,6 @@ import Logo from "./Logo";
 
 
 const data = {
-  user: {
-    name: "User",
-    email: "user@example.com",
-    avatar: "",
-  },
   services: [
     {
       title: "Generative Identity",
@@ -85,7 +81,8 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { authUser } = useAuthStore();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -124,7 +121,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={{
+          name: authUser?.username ?? "User",
+          email: authUser?.email ?? "",
+          avatar: "",
+        }} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
