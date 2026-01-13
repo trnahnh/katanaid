@@ -14,6 +14,7 @@ import (
 	captchaservice "katanaid/services/captcha-service"
 	identityservice "katanaid/services/identity-service"
 	spamservice "katanaid/services/spam-service"
+	trustservice "katanaid/services/trust-service"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/joho/godotenv"
@@ -126,6 +127,12 @@ func main() {
 		r.Use(middleware.RateLimiterPerMinute(60))
 		r.Post("/create", captchaservice.CreateChallenge)
 		r.Post("/verify", captchaservice.VerifyChallenge)
+	})
+
+	r.Route("/api/trust", func(r chi.Router) {
+		r.Use(middleware.RateLimiterPerMinute(30))
+		r.Post("/score", trustservice.CalculateTrustScore)
+		r.Post("/record", trustservice.RecordFingerprint)
 	})
 
 	port := os.Getenv("PORT")
