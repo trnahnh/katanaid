@@ -6,6 +6,8 @@ type User struct {
 	Email         string
 	PasswordHash  string
 	EmailVerified bool
+	FirstName     *string
+	LastName      *string
 }
 
 type SignupRequest struct {
@@ -21,12 +23,27 @@ type LoginRequest struct {
 
 // Shared by both login and signup
 type AuthSuccessResponse struct {
-	Token         string `json:"token"`
-	Username      string `json:"username"`
-	Email         string `json:"email"`
-	EmailVerified bool   `json:"email_verified"`
+	Token         string  `json:"token"`
+	Username      string  `json:"username"`
+	Email         string  `json:"email"`
+	EmailVerified bool    `json:"email_verified"`
+	FirstName     *string `json:"first_name,omitempty"`
+	LastName      *string `json:"last_name,omitempty"`
 }
 
 type ErrorResponse struct {
 	Error string `json:"error"`
+}
+
+type UpdateProfileRequest struct {
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+}
+
+type ProfileResponse struct {
+	Username      string  `json:"username"`
+	Email         string  `json:"email"`
+	EmailVerified bool    `json:"email_verified"`
+	FirstName     *string `json:"first_name,omitempty"`
+	LastName      *string `json:"last_name,omitempty"`
 }
