@@ -10,6 +10,8 @@ interface JWTPayload {
   username: string;
   email: string;
   email_verified: boolean;
+  first_name?: string;
+  last_name?: string;
   exp: number;
   iat: number;
 }
@@ -18,6 +20,8 @@ interface AuthUser {
   username: string;
   email: string;
   email_verified: boolean;
+  firstName?: string;
+  lastName?: string;
 }
 
 interface AuthStore {
@@ -25,6 +29,7 @@ interface AuthStore {
   token: string | null;
   isSigningUp: boolean;
   isLoggingIn: boolean;
+  isUpdatingProfile: boolean;
   setOAuthToken: (token: string) => void;
   signup: (signupData: {
     username: string;
@@ -33,6 +38,7 @@ interface AuthStore {
   }) => Promise<void>;
   login: (loginData: { email: string; password: string }) => Promise<void>;
   logout: () => void;
+  updateProfile: (data: { firstName: string; lastName: string }) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -42,6 +48,7 @@ export const useAuthStore = create<AuthStore>()(
       token: null,
       isSigningUp: false,
       isLoggingIn: false,
+      isUpdatingProfile: false,
 
       setOAuthToken: (token: string) => {
         try {
@@ -52,6 +59,8 @@ export const useAuthStore = create<AuthStore>()(
               username: decoded.username,
               email: decoded.email,
               email_verified: decoded.email_verified,
+              firstName: decoded.first_name,
+              lastName: decoded.last_name,
             },
           });
           toast.success("Logged in successfully.");
@@ -74,6 +83,8 @@ export const useAuthStore = create<AuthStore>()(
               username: res.data.username,
               email: res.data.email,
               email_verified: res.data.email_verified,
+              firstName: res.data.first_name,
+              lastName: res.data.last_name,
             },
           });
           toast.success("Account created successfully.");
@@ -104,6 +115,8 @@ export const useAuthStore = create<AuthStore>()(
               username: res.data.username,
               email: res.data.email,
               email_verified: res.data.email_verified,
+              firstName: res.data.first_name,
+              lastName: res.data.last_name,
             },
           });
           toast.success("Logged in successfully.");
@@ -127,6 +140,38 @@ export const useAuthStore = create<AuthStore>()(
       logout: () => {
         set({ token: null, authUser: null });
         toast.success("Successfully logged out");
+      },
+
+      updateProfile: async (data: { firstName: string; lastName: string }) => {
+        set({ isUpdatingProfile: true });
+        try {
+          const res = await axiosInstance.patch("/user/profile", {
+            first_name: data.firstName,
+            last_name: data.lastName,
+          });
+
+          const decoded = jwtDecode<JWTPayload>(res.data.token);
+          set({
+            token: res.data.token,
+            authUser: {
+              username: decoded.username,
+              email: decoded.email,
+              email_verified: decoded.email_verified,
+              firstName: decoded.first_name,
+              lastName: decoded.last_name,
+            },
+          });
+          toast.success("Profile updated successfully.");
+        } catch (error: unknown) {
+          if (error instanceof AxiosError) {
+            toast.error(error.response?.data.error || "Failed to update profile");
+          } else {
+            toast.error("Failed to update profile");
+          }
+          throw error;
+        } finally {
+          set({ isUpdatingProfile: false });
+        }
       },
     }),
     {

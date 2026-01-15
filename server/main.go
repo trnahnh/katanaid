@@ -111,6 +111,9 @@ func main() {
 	r.Get("/auth/github", handlers.GitHubLogin)
 	r.Get("/auth/github/callback", handlers.GitHubCallback)
 
+	r.With(middleware.AuthMiddleware).Get("/user/profile", handlers.GetProfile)
+	r.With(middleware.AuthMiddleware).Patch("/user/profile", handlers.UpdateProfile)
+
 	r.Route("/api", func(r chi.Router) {
 		r.Use(middleware.RateLimiterPerHour(3))
 		r.Post("/identity/username", identityservice.GenerateUsername)

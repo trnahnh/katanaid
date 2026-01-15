@@ -211,11 +211,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
+	var firstName, lastName *string
 	err = database.DB.QueryRow(
 		context.Background(),
-		"SELECT id, username, email, password_hash, email_verified FROM users WHERE email = $1",
+		"SELECT id, username, email, password_hash, email_verified, first_name, last_name FROM users WHERE email = $1",
 		email,
-	).Scan(&user.ID, &user.Username, &user.Email, &user.PasswordHash, &user.EmailVerified)
+	).Scan(&user.ID, &user.Username, &user.Email, &user.PasswordHash, &user.EmailVerified, &firstName, &lastName)
 
 	if err != nil {
 		log.Print("Incorrect username or password")
@@ -242,7 +243,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tokenString, err := generateSignedToken(user.ID, user.Username, user.Email, user.EmailVerified)
+	tokenString, err := generateSignedTokenWithProfile(user.ID, user.Username, user.Email, user.EmailVerified, firstName, lastName)
 	if err != nil {
 		log.Print("Error generating token for login:", err)
 		util.WriteJSON(w, http.StatusInternalServerError, models.ErrorResponse{Error: "Something went wrong"})
@@ -255,6 +256,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Username:      user.Username,
 		Email:         user.Email,
 		EmailVerified: user.EmailVerified,
+		FirstName:     firstName,
+		LastName:      lastName,
 	})
 }
 
@@ -366,4 +369,27 @@ func sendVerificationEmail(token string, email string, username string) error {
 	}
 
 	return nil
+}
+
+// New function - generates token including profile fields
+func generateSignedTokenWithProfile(userID int, username, email string, emailVerified bool, firstName, lastName *string) (string, error) {
+	claims := jwt.MapClaims{
+		"user_id":        userID,
+		"username":       username,
+		"email":          email,
+		"email_verified": emailVerified,
+		"iat":            time.Now().Unix(),
+		"exp":            time.Now().Add(time.Hour * 24).Unix(),
+	}
+
+	// Only include names if they exist
+	if firstName != nil {
+		claims["first_name"] = *firstName
+	}
+	if lastName != nil {
+		claims["last_name"] = *lastName
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }
